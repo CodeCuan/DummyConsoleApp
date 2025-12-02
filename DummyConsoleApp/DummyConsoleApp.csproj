@@ -9,7 +9,10 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="QuestPDF" Version="2025.5.1" />
     <PackageReference Include="ShellProgressBar" Version="5.2.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.10" />
+    <PackageReference Include="VersOne.Epub" Version="3.3.4" />
   </ItemGroup>
 
 </Project>
