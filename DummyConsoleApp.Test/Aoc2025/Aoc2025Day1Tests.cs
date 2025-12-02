@@ -3,10 +3,10 @@ using DummyConsoleApp.AdventOfCoding.Utilities;
 
 namespace DummyConsoleApp.Test.Aoc2025;
 
-public class Aoc2025Solution1Tests
+public class Aoc2025Day1Tests
 {
     private readonly Day1PasswordCracker sut;
-    public Aoc2025Solution1Tests() { 
+    public Aoc2025Day1Tests() { 
         sut = new Day1PasswordCracker();
     }
 
