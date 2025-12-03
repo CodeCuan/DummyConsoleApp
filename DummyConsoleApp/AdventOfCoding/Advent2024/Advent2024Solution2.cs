@@ -9,7 +9,7 @@ public class Advent2024Solution2
     public List<List<int>> data;
     public Advent2024Solution2()
     {
-        data = DataParser.ParseData(AdventData2024.PuzzleTwoReportData);
+        data = DataParser.ParseDataIntoIntLists(AdventData2024.PuzzleTwoReportData);
     }
 
     public void Main()

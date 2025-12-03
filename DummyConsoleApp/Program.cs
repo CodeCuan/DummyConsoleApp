@@ -1,5 +1,5 @@
 ﻿using DummyConsoleApp.AdventOfCoding.Advent2025;
 
 
-Day2CodeValidator solution = new();
+Day3BatteryCalculator solution = new();
 solution.Main();

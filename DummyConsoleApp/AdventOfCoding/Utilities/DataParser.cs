@@ -4,20 +4,23 @@ namespace DummyConsoleApp.AdventOfCoding.Utilities;
 
 public class DataParser
 {
-    public static List<List<int>> ParseData(string input)
+    public static List<List<int>> ParseDataIntoIntLists(string input, bool noSeperator = false)
     {
         var result = new List<List<int>>();
         foreach (var entry in input.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
         {
-            result.Add(ParseDataLine(entry));
+            result.Add(ParseDataLine(entry, noSeperator));
         }
         return result;
     }
 
-    public static List<int> ParseDataLine(string input)
+    public static List<int> ParseDataLine(string input, bool noSeperator = false)
     {
         List<int> partsList = new List<int>();
-        var parts = input.Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
+        IEnumerable<string> parts = noSeperator
+            ? input.ToArray().Select(x => x.ToString())    
+            : input.Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
+
         foreach (var part in parts)
         {
             partsList.Add(int.Parse(part));
