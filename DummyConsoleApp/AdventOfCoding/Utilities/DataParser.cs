@@ -42,7 +42,7 @@ public class DataParser
         var result = new List<List<char>>();
         foreach (var entry in input.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
         {
-            result.Add(entry.ToList());
+            result.Add(entry.Trim().ToList());
         }
         return result;
     }
