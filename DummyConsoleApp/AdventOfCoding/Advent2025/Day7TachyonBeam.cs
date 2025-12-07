@@ -10,17 +10,11 @@ public class Day7TachyonBeam
     public void Main()
     {
         Console.WriteLine("Day 7 Tachyon Beam");
-        Problem2();
-    }
-
-    public void Problem1()
-    {
+        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         ProcessMultiBeam(AdventData2025.Day7TachyonMap);
-    }
-
-    public void Problem2()
-    {
         ProcessBeamTimelines(AdventData2025.Day7TachyonMap);
+        stopwatch.Stop();
+        Console.WriteLine($"Execution Time: {stopwatch.ElapsedMilliseconds} ms");
     }
 
     public int ProcessMultiBeam(string input)
