@@ -1,5 +1,6 @@
-﻿using DummyConsoleApp.AdventOfCoding.Advent2025;
+﻿using DummyConsoleApp.AdventOfCoding.Advent2015;
+using DummyConsoleApp.AdventOfCoding.Advent2025;
 
 
-Day7TachyonBeam solution = new();
+Day1ApartmentSize solution = new();
 solution.Main();
