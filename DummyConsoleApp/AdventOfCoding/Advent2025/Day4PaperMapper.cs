@@ -43,7 +43,7 @@ public class Day4PaperMapper
             for (int x = 0; x < width; x++)
             {
                 var currentChar = rolls[y][x];
-                if(currentChar == 'x')
+                if (currentChar == 'x')
                     rolls[y][x] = '.';
                 if (currentChar != roll)
                     continue;
@@ -51,13 +51,15 @@ public class Day4PaperMapper
                 if (neighbours < 4)
                 {
                     removableRolls++;
-                    rolls[y][x] = 'x';
+                    if (recursive)
+                        rolls[y][x] = 'x';
                 }
             }
         }
         Console.WriteLine($"Removable Rolls pass {passNumber}: {removableRolls}");
-        if (logRolls) { 
-            foreach(var row in rolls)
+        if (logRolls)
+        {
+            foreach (var row in rolls)
             {
                 Console.WriteLine(string.Join("", row));
             }

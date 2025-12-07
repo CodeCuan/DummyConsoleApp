@@ -1,11 +1,11 @@
 ﻿using DummyConsoleApp.AdventOfCoding.Data;
 using DummyConsoleApp.AdventOfCoding.Utilities;
+using DummyConsoleApp.AdventOfCoding.Utilities.Extensions;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025;
 
 public class Day7TachyonBeam
 {
-    public bool LogLines = false;
     public int splits = 0;
     public void Main()
     {
@@ -38,28 +38,26 @@ public class Day7TachyonBeam
 
     public HashSet<int> ProcessMultiBeam(HashSet<int> beams, List<char> dataLine)
     {
-        HashSet<int> newBeams = new HashSet<int>();
+        HashSet<int> newBeamCollection = new HashSet<int>();
         foreach (var beam in beams)
         {
-            if (dataLine[beam] == '^')
-            {
-                newBeams.Add(beam + 1);
-                newBeams.Add(beam - 1);
+            var isSplit = dataLine[beam] == '^';
+            IEnumerable<int> newBeams = isSplit
+                ? [beam + 1, beam - 1]
+                : [beam];
+            newBeamCollection.AddRange(newBeams);
+            if(isSplit)
                 splits++;
-            }
-            else
-            {
-                newBeams.Add(beam);
-            }
         }
-        return newBeams;
+        return newBeamCollection;
     }
 
     public long ProcessBeamTimelines(string input)
     {
         var data = DataParser.ParseDataIntoString(input);
-        Dictionary<int, long> activeBeam = new Dictionary<int, long>();
-        activeBeam[data.First().IndexOf('S')] = 1;
+        Dictionary<int, long> activeBeam = new() {
+            { data.First().IndexOf('S'), 1 }
+        };
         foreach (var dataLine in data.Skip(1))
         {
             activeBeam = ProcessTimelines(activeBeam, dataLine);
@@ -74,33 +72,14 @@ public class Day7TachyonBeam
         Dictionary<int, long> newTimelines = new();
         foreach (var timeline in beamTimelines)
         {
-            if (dataLine[timeline.Key] == '^')
-            {
-                newTimelines.AddOrIncrement(timeline.Key + 1, timeline.Value);
-                newTimelines.AddOrIncrement(timeline.Key - 1, timeline.Value);
-                splits++;
-            }
-            else
-            {
-                newTimelines.AddOrIncrement(timeline.Key, timeline.Value);
-            }
+            IEnumerable<int> newBeams = dataLine[timeline.Key] == '^'
+                ? [timeline.Key + 1, timeline.Key - 1]
+                : [timeline.Key];
+            newTimelines.AddOrIncrement(newBeams, timeline.Value);
         }
         return newTimelines;
     }
 }
 
-public static class Extensions
-{
-    public static void AddOrIncrement(this Dictionary<int, long> myDictionary, int key, long incrementValue)
-    {
-        if (myDictionary.ContainsKey(key))
-        {
-            myDictionary[key] += incrementValue;
-        }
-        else
-        {
-            myDictionary[key] = incrementValue;
-        }
-    }
-}
+
 

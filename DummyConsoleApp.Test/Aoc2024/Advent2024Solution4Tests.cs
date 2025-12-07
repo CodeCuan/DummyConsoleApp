@@ -12,14 +12,6 @@ public class Advent2024Solution4Tests
     public Advent2024Solution4 sut = new Advent2024Solution4();
 
     [Theory]
-    [InlineData(@"", 161)]
-    public void Solve_ReturnsExpectedResult(string input, int expected)
-    {
-        var result = sut.Search(input);
-        Assert.Equal(expected, result);
-    }
-
-    [Theory]
     [InlineData(@"MMMSXXMASM
 MSAMXMSMSA
 AMXSXMAAMM
