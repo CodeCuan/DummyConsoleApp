@@ -2,5 +2,5 @@
 using DummyConsoleApp.AdventOfCoding.Advent2025;
 
 
-Day1ApartmentSize solution = new();
+Day8JunctionBoxes solution = new();
 solution.Main();

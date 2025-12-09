@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using DummyConsoleApp.AdventOfCoding.Utilities.DataStructures;
+using System.Data;
 
 namespace DummyConsoleApp.AdventOfCoding.Utilities;
 
@@ -58,5 +59,12 @@ public class DataParser
             result.Add(entry.Trim().ToList());
         }
         return result;
+    }
+
+    public static List<Coordinate3D> ParseDataIntoCoordinate3D(string input)
+    {
+        return input.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
+            .Select(row => new Coordinate3D(input))
+            .ToList();
     }
 }
