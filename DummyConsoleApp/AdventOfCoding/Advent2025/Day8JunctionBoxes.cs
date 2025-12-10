@@ -9,41 +9,33 @@ namespace DummyConsoleApp.AdventOfCoding.Advent2025;
 
 public class Day8JunctionBoxes
 {
-    List<LinkedCoordinate3D> Coordinates = [];
+    List<Coordinate3D> Coordinates = [];
     public void Main()
     {
         Console.WriteLine("Day8JunctionBoxes");
         var stoppy = Stopwatch.StartNew();
-        var circuitSize = CheckThreeLargestCircuits(AdventData2025.Day8JunctionBoxes, 10);
+        var circuitSize = CheckThreeLargestCircuits(AdventData2025.Day8JunctionBoxes, 1000);
         stoppy.Stop();
-        Console.WriteLine($"Three largest circuits multiplied size: {circuitSize}");
+        Console.WriteLine($"Three largest circuits multiplied size: {circuitSize}. Solved in {stoppy.ElapsedMilliseconds} ms");
+        stoppy = Stopwatch.StartNew();
+        var wallDistance = CheckWallDistance(AdventData2025.Day8JunctionBoxes);
+        stoppy.Stop();
+        Console.WriteLine($"The wall distance product is: {wallDistance}. Solved in {stoppy.ElapsedMilliseconds} ms");
+
     }
 
     public int CheckThreeLargestCircuits(string input, int connectionCount)
     {
         Coordinates = DataParser.SplitDataLine(input)
-            .Select(inputLine => new LinkedCoordinate3D(inputLine))
+            .Select(inputLine => new Coordinate3D(inputLine))
             .ToList();
 
-        SetClosestNeighbours();
-        var orderedCoords = Coordinates
-            .OrderBy(coord => coord.ClosestDistanceSquared)
-            .ToList();
+        var closestNeighbours = GetClosestDistances();
 
-        List<HashSet<LinkedCoordinate3D>> connectedCircuits = [];
-        for (int i = 0; i < connectionCount; i++)
-        {
-            var coord = orderedCoords.First();
-            coord.Connections.Add(
-                coord.ClosestConnection
-                ?? throw new Exception("Closest connection not set"));
-            coord.ClosestConnection.Connections.Add(coord);
-            orderedCoords.Remove(coord);
-            if (coord.ClosestConnection.ClosestConnection == coord)
-                orderedCoords.Remove(coord.ClosestConnection);
-
-            if (!TryAddCircuit(coord, connectedCircuits))
-                i--;
+        List<HashSet<Coordinate3D>> connectedCircuits = [];
+        foreach (var connection in closestNeighbours.Take(connectionCount))
+        { 
+            AddCircuit(connection, connectedCircuits);
         }
         var circuits = connectedCircuits
             .OrderByDescending(circuit => circuit.Count)
@@ -52,64 +44,84 @@ public class Day8JunctionBoxes
         return circuits.Aggregate(1, (product, circuit) => product * circuit.Count);
     }
 
-    private bool TryAddCircuit(LinkedCoordinate3D coordinate, List<HashSet<LinkedCoordinate3D>> circuits)
+    public long CheckWallDistance(string input)
     {
-        var otherCoord = coordinate.ClosestConnection ?? throw new Exception("Closest connection not set");
-        var circuitOne = circuits.Where(circuit => circuit.Contains(coordinate)).FirstOrDefault();
-        var circuitTwo = circuits.Where(circuit => circuit.Contains(otherCoord)).FirstOrDefault();
+        Coordinates = DataParser.SplitDataLine(input)
+            .Select(inputLine => new Coordinate3D(inputLine))
+            .ToList();
+        var closestNeighbours = GetClosestDistances();
+        List<HashSet<Coordinate3D>> connectedCircuits = [];
+        foreach (var connection in closestNeighbours)
+        {
+
+            AddCircuit(connection, connectedCircuits);
+            Coordinates.Remove(connection.coord1);
+            Coordinates.Remove(connection.coord2);
+            if (Coordinates.Count == 0)
+            {
+                return connection.coord2.X * connection.coord1.X;
+            }
+        }
+        throw new Exception("Could not connect all boxes");
+    }
+
+    private void AddCircuit(LinkedCoordinates3D coordinates, List<HashSet<Coordinate3D>> circuits)
+    {
+        var circuitOne = circuits.Where(circuit => circuit.Contains(coordinates.coord1)).FirstOrDefault();
+        var circuitTwo = circuits.Where(circuit => circuit.Contains(coordinates.coord2)).FirstOrDefault();
 
         if (circuitOne != null
             && circuitTwo != null)
         {
             if (circuitOne == circuitTwo)
-                return false;
+                return;
             circuits.Remove(circuitTwo);
             circuitOne.AddRange(circuitTwo);
-            return true;
         }
+
         if (circuitOne != null)
-        { 
-            circuitOne.Add(otherCoord);
-            return true;
+        {
+            circuitOne.Add(coordinates.coord2);
+            return;
         }
         if (circuitTwo != null)
-        { 
-            circuitTwo.Add(coordinate);
-            return true;
+        {
+            circuitTwo.Add(coordinates.coord1);
+            return;
         }
 
-        circuits.Add([coordinate, otherCoord]);
-        return true;
+        circuits.Add([coordinates.coord1, coordinates.coord2]);
     }
 
-    private void SetClosestNeighbours()
+    private List<LinkedCoordinates3D> GetClosestDistances()
     {
+        List<LinkedCoordinates3D> links = [];
+        List<Coordinate3D> unprocessedCoordinates = [.. Coordinates];
         foreach (var coordinate in Coordinates)
         {
-            foreach (var otherCoordinate in Coordinates)
+            unprocessedCoordinates.Remove(coordinate);
+            foreach (var neighbour in unprocessedCoordinates)
             {
-                if (coordinate == otherCoordinate)
-                    continue;
-                var distanceSquared = coordinate.GetDistanceSquared(otherCoordinate);
-                if (distanceSquared < coordinate.ClosestDistanceSquared)
-                {
-                    coordinate.ClosestDistanceSquared = distanceSquared;
-                    coordinate.ClosestConnection = otherCoordinate;
-                    coordinate.ClosestDistanceSquared = distanceSquared;
-                }
+                links.Add(
+                        new LinkedCoordinates3D(coordinate, neighbour)
+                    );
             }
         }
+        return links.OrderBy(link => link.DistanceSquared).ToList();
     }
 
-    private class LinkedCoordinate3D : Coordinate3D
+
+    private class LinkedCoordinates3D
     {
-        public List<LinkedCoordinate3D> Connections = [];
+        public Coordinate3D coord1;
+        public Coordinate3D coord2;
 
-        public LinkedCoordinate3D? ClosestConnection = null;
-
-        public double ClosestDistanceSquared = double.MaxValue;
-        public LinkedCoordinate3D(string input) : base(input)
+        public double DistanceSquared;
+        public LinkedCoordinates3D(Coordinate3D coord1, Coordinate3D coord2) 
         {
+            this.coord1 = coord1;
+            this.coord2 = coord2;
+            DistanceSquared = coord1.GetDistanceSquared(coord2);
         }
     }
 }
