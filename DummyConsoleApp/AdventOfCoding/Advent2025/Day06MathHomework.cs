@@ -3,7 +3,7 @@ using DummyConsoleApp.AdventOfCoding.Utilities;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025;
 
-public class Day6MathHomework
+public class Day06MathHomework
 {
     public void Main()
     {

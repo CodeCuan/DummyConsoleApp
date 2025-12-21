@@ -3,7 +3,7 @@ using DummyConsoleApp.AdventOfCoding.Utilities;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025
 {
-    public class Day5IngredientCounter
+    public class Day05IngredientCounter
     {
         public void Main()
         {

@@ -4,7 +4,7 @@ namespace DummyConsoleApp.Test.Aoc2025;
 
 public class AoCDay9Tests
 {
-    Day9RedCarpet sut = new Day9RedCarpet();
+    Day09RedCarpet sut = new Day09RedCarpet();
 
     [Fact]
     public void LargestRectangle_WithSampleData_CalculatesCorrectly()

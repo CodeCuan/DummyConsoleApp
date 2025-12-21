@@ -18,7 +18,7 @@ namespace DummyConsoleApp.Test.Aoc2025
         [InlineData(121212, false)]
         public void IsValidCode_SolutionOne(int input, bool expectedResult) {
 
-            Assert.Equal(expectedResult, Day2CodeValidator.IsValidCodeSimple(input));
+            Assert.Equal(expectedResult, Day02CodeValidator.IsValidCodeSimple(input));
         }
 
         [Theory]
@@ -29,7 +29,7 @@ namespace DummyConsoleApp.Test.Aoc2025
         public void IsValidCode_SolutionTwo(int input, bool expectedResult)
         {
 
-            Assert.Equal(expectedResult, Day2CodeValidator.IsValidCode(input));
+            Assert.Equal(expectedResult, Day02CodeValidator.IsValidCode(input));
         }
         [Theory]
         [InlineData("11-22", 33)]
@@ -39,7 +39,7 @@ namespace DummyConsoleApp.Test.Aoc2025
 
         public void IsValidSum_SolutionTwo(string input, int expectedResult) {
             
-            Assert.Equal(expectedResult, new Day2CodeValidator().GetInvalidNumberSum(input, false));
+            Assert.Equal(expectedResult, new Day02CodeValidator().GetInvalidNumberSum(input, false));
 
         }
     }

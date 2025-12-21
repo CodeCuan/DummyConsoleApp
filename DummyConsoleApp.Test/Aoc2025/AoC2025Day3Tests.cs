@@ -5,7 +5,7 @@ namespace DummyConsoleApp.Test.Aoc2025;
 
 public class AoC2025Day3Tests
 {
-    public Day3BatteryCalculator sut = new Day3BatteryCalculator();
+    public Day03BatteryCalculator sut = new Day03BatteryCalculator();
 
     [Theory]
     [InlineData("123456789", 89, 2)]

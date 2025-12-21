@@ -4,7 +4,7 @@ namespace DummyConsoleApp.Test.Aoc2025;
 
 public class AoCDay6Tests
 {
-    public Day6MathHomework sut = new();
+    public Day06MathHomework sut = new();
 
     [Theory]
     [InlineData(@"123 328  51 64 

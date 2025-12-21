@@ -4,7 +4,7 @@ namespace DummyConsoleApp.Test.Aoc2025;
 
 public class AoCDay8Tests
 {
-    Day8JunctionBoxes sut = new Day8JunctionBoxes();
+    Day08JunctionBoxes sut = new Day08JunctionBoxes();
     [Fact]
     public void CircuitSize_WithSampleData_CalculatesCorrectly()
     {

@@ -4,7 +4,7 @@ using DummyConsoleApp.AdventOfCoding.Utilities.Extensions;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025;
 
-public class Day7TachyonBeam
+public class Day07TachyonBeam
 {
     public int splits = 0;
     public void Main()

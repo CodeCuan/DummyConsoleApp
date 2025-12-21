@@ -4,7 +4,7 @@ namespace DummyConsoleApp.Test.Aoc2025
 {
     public class AoC2025Day4Tests
     {
-        public Day4PaperMapper sut = new();
+        public Day04PaperMapper sut = new();
         const string sampleInput = @"..@@.@@@@.
 @@@.@.@.@@
 @@@@@.@.@@

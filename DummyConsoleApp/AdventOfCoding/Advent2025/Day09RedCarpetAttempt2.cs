@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025;
 
-public class Day9RedCarpetAttempt2
+public class Day09RedCarpetAttempt2
 {
     const string sampleData = @"7,1
 11,1

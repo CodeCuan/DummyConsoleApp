@@ -7,7 +7,7 @@ using static DummyConsoleApp.AdventOfCoding.Utilities.DataStructures.Coordinate2
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025;
 
-public class Day9RedCarpet
+public class Day09RedCarpet
 {
     public void Main()
     {

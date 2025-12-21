@@ -5,9 +5,9 @@ namespace DummyConsoleApp.Test.Aoc2025;
 
 public class Aoc2025Day1Tests
 {
-    private readonly Day1PasswordCracker sut;
+    private readonly Day01PasswordCracker sut;
     public Aoc2025Day1Tests() { 
-        sut = new Day1PasswordCracker();
+        sut = new Day01PasswordCracker();
     }
 
     [Theory]

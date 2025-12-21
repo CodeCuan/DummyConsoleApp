@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025;
 
-public class Day8JunctionBoxes
+public class Day08JunctionBoxes
 {
     List<Coordinate3D> Coordinates = [];
     public void Main()

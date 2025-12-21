@@ -3,7 +3,7 @@ using DummyConsoleApp.AdventOfCoding.Utilities;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025
 {
-    public class Day3BatteryCalculator
+    public class Day03BatteryCalculator
     {
         public void Main()
         {

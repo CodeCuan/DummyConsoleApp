@@ -4,7 +4,7 @@ namespace DummyConsoleApp.Test.Aoc2025;
 
 public class AoC2025Day5Tests
 {
-    public Day5IngredientCounter sut = new();
+    public Day05IngredientCounter sut = new();
     [Theory]
     [InlineData(@"3 -5
 10-14

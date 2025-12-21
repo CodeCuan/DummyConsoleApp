@@ -3,11 +3,11 @@ using DummyConsoleApp.AdventOfCoding.Utilities;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025;
 
-public class Day1PasswordCracker
+public class Day01PasswordCracker
 {
-    List<string> codes;
+    List<string> codes = [];
     const int startingPos = 50;
-    public Day1PasswordCracker() { 
+    public Day01PasswordCracker() { 
     }
 
     public void Main()

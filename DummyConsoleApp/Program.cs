@@ -1,4 +1,4 @@
 ﻿using DummyConsoleApp.AdventOfCoding.Advent2025;
 
-Day11ServerConnections solution = new();
+Day12PuzzleForms solution = new();
 solution.Main();

@@ -3,7 +3,7 @@ using DummyConsoleApp.AdventOfCoding.Utilities;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025;
 
-public class Day4PaperMapper
+public class Day04PaperMapper
 {
 
     private const char roll = '@';
