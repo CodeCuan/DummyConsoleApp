@@ -74,7 +74,6 @@ public class Day10SwitchLights
                 {
                     if (expected)
                         return false;
-
                 }
             }
             return true;
@@ -111,7 +110,11 @@ public class Day10SwitchLights
 
             }
             var resultStatus = solver.Solve();
-            return (int)buttonVariables.Sum(bVar => bVar.SolutionValue());
+            var totalSum = (int)buttonVariables.Sum(bVar => bVar.SolutionValue());
+            Console.WriteLine($"solution = {totalSum}: {string.Join(", ", buttonVariables.Select(bv =>
+                $"{bv.Name()}={bv.SolutionValue()}"
+            ))}");
+            return totalSum;
 
         }
 
