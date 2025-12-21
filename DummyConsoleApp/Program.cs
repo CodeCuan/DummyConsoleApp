@@ -1,4 +1,4 @@
 ﻿using DummyConsoleApp.AdventOfCoding.Advent2025;
 
-Day9RedCarpetAttempt2 solution = new();
+Day10SwitchLights solution = new();
 solution.Main();
