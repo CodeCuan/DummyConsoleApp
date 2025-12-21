@@ -26,4 +26,31 @@ public static class DictionaryExtensions
         foreach (var key in keys)
             myDictionary.AddOrIncrement(key, incrementValue);
     }
+
+    //public static void AddToList<TKey, TValue>(this Dictionary<TKey, List<TValue>> myDictionary, TKey key, TValue incrementValue)
+    //    where TKey : notnull
+    //{
+    //    if (myDictionary.ContainsKey(key))
+    //    {
+    //        myDictionary[key].Add(incrementValue);
+    //    }
+    //    else
+    //    {
+    //        myDictionary[key] = [incrementValue];
+    //    }
+    //}
+
+    public static void AddToList<TKey, TValue, TDictionary>(this TDictionary myDictionary, TKey key, TValue incrementValue)
+        where TDictionary : IDictionary<TKey, List<TValue>>
+        where TKey : notnull
+    {
+        if (myDictionary.ContainsKey(key))
+        {
+            myDictionary[key].Add(incrementValue);
+        }
+        else
+        {
+            myDictionary[key] = [incrementValue];
+        }
+    }
 }

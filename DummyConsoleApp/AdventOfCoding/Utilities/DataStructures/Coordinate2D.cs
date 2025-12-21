@@ -56,9 +56,14 @@ public class Coordinate2D
         public readonly long X = X;
         public readonly long Y = Y;
 
+        public override string ToString()
+        {
+            return $"{X},{Y}";
+        }
         public override bool Equals(object? obj)
         {
-            return obj is CoordinateKey other && Equals(other);
+            return obj is CoordinateKey other && Equals(other)
+                || obj is Coordinate2D coord && Equals(coord.Key);
         }
 
         public bool Equals(CoordinateKey other)

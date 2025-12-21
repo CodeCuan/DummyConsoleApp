@@ -12,6 +12,9 @@
     <PackageReference Include="QuestPDF" Version="2025.5.1" />
     <PackageReference Include="ShellProgressBar" Version="5.2.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.10" />
+    <PackageReference Include="SkiaSharp" Version="3.119.1" />
+    <PackageReference Include="System.Drawing.Common" Version="10.0.1" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
     <PackageReference Include="VersOne.Epub" Version="3.3.4" />
   </ItemGroup>
 
