@@ -47,7 +47,7 @@ public class Advent2024Solution4
 
     public IEnumerable<string> BreakDown(string input)
     {
-        var data = DataParser.SplitDataLine(input);
+        var data = DataParser.SplitLines(input);
         foreach (var line in data)
         {
             yield return line;

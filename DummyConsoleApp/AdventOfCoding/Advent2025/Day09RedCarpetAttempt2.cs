@@ -217,7 +217,7 @@ public class Day09RedCarpetAttempt2
         redCarpetByY = [];
         verticalLines = [];
         horizontalLines = [];
-        redCarpets = DataParser.SplitDataLine(input)
+        redCarpets = DataParser.SplitLines(input)
              .Select(inputLine => new Coordinate2D(inputLine))
              .ToList();
 

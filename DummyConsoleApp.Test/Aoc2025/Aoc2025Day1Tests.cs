@@ -15,7 +15,7 @@ public class Aoc2025Day1Tests
     [InlineData("L68\r\nL30\r\nR48\r\nL5\r\nR60\r\nL55\r\nL1\r\nL99\r\nR14\r\nL82",6)]
     public void CrackPasswords_WithOfficialSample(string sampleData, int expectedCount)
     {
-        var data = DataParser.SplitDataLine(sampleData, true);
+        var data = DataParser.SplitLines(sampleData, true);
         var value = sut.CrackPasswordsAdvanced(data);
         Assert.Equal(expectedCount, value);
     }

@@ -22,7 +22,7 @@ public class Day10SwitchLights
 
     public int GetTotalSwitchCountForLines(string line, bool checkVoltage = false)
     {
-        var dataLines = DataParser.SplitDataLine(line);
+        var dataLines = DataParser.SplitLines(line);
         var totalSum = 0;
         foreach (var dataLine in dataLines)
         {

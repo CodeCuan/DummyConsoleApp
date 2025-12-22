@@ -26,7 +26,7 @@ public class Day08JunctionBoxes
 
     public int CheckThreeLargestCircuits(string input, int connectionCount)
     {
-        Coordinates = DataParser.SplitDataLine(input)
+        Coordinates = DataParser.SplitLines(input)
             .Select(inputLine => new Coordinate3D(inputLine))
             .ToList();
 
@@ -46,7 +46,7 @@ public class Day08JunctionBoxes
 
     public long CheckWallDistance(string input)
     {
-        Coordinates = DataParser.SplitDataLine(input)
+        Coordinates = DataParser.SplitLines(input)
             .Select(inputLine => new Coordinate3D(inputLine))
             .ToList();
         var closestNeighbours = GetClosestDistances();

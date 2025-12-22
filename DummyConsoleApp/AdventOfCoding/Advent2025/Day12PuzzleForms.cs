@@ -20,7 +20,7 @@ public class Day12PuzzleForms
     public int CountRegions(string input)
     {
         List<PuzzleShape> puzzleShapes = [];
-        var data = DataParser.SplitDataLine(input);
+        var data = DataParser.SplitLines(input);
         var treeRegions = data.Skip(shapes * 4).Select(line => new PuzzleRegion(line)).ToList();
         for (int shapeCount = 0; shapeCount < shapes; shapeCount++) {
             puzzleShapes.Add(new PuzzleShape(data.Skip(4 * shapeCount + 1).Take(3)));

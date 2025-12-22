@@ -211,7 +211,7 @@ public class Day09RedCarpet
 
     private List<Rectangle2D> GetRectangles(string input)
     {
-        var redCarpets = DataParser.SplitDataLine(input)
+        var redCarpets = DataParser.SplitLines(input)
          .Select(inputLine => new Coordinate2D(inputLine))
          .ToList();
         List<Coordinate2D> unusedCarpets = [.. redCarpets];

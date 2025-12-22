@@ -36,7 +36,7 @@ public class Day06MathHomework
     public void SetDataSimple(string input)
     {
         mathProblems = [];
-        var lines = DataParser.SplitDataLine(input);
+        var lines = DataParser.SplitLines(input);
         var dataLines = lines
             .Take(lines.Count - 1)
             .Select(line => DataParser.ParseDataLine(line))
@@ -57,7 +57,7 @@ public class Day06MathHomework
     public void SetData(string input)
     {
         mathProblems = [];
-        var lines = DataParser.SplitDataLine(input, trim: false);
+        var lines = DataParser.SplitLines(input, trim: false);
         var mathInput = new MathProblem();
         var operatorLine = lines.Last();
         for (int i = 0; i < lines.First().Length; i++)

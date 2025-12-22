@@ -1,4 +1,4 @@
-﻿using DummyConsoleApp.AdventOfCoding.Advent2025;
+﻿using DummyConsoleApp.AdventOfCoding.Advent2015;
 
-Day12PuzzleForms solution = new();
+Day2PaperSizing solution = new();
 solution.Main();

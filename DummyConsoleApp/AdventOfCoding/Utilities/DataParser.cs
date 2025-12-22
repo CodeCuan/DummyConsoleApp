@@ -29,7 +29,7 @@ public class DataParser
         return partsList;
     }
 
-    public static List<string> SplitDataLine(string input, bool toLower = false, bool trim = true)
+    public static List<string> SplitLines(string input, bool toLower = false, bool trim = true)
     {
         return input.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
             .Select(row => FormatLine(row, toLower, trim))

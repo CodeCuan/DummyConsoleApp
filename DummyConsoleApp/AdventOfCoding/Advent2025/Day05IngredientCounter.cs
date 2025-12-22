@@ -13,7 +13,7 @@ namespace DummyConsoleApp.AdventOfCoding.Advent2025
         }
         public int CountIngredients(string rangesInput, string ingredientsInput)
         {
-            var ranges = DataParser.SplitDataLine(rangesInput);
+            var ranges = DataParser.SplitLines(rangesInput);
             var ingredients = DataParser.SplitDataLineToLong(ingredientsInput);
             var rangesList = new List<Range>();
             foreach (var range in ranges)
@@ -29,7 +29,7 @@ namespace DummyConsoleApp.AdventOfCoding.Advent2025
 
         public long CountRanges(string rangesInput)
         {
-            var inputs = DataParser.SplitDataLine(rangesInput);
+            var inputs = DataParser.SplitLines(rangesInput);
             List<Range> ranges = new List<Range>();
             foreach (var input in inputs)
             {

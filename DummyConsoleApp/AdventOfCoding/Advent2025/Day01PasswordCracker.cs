@@ -12,7 +12,7 @@ public class Day01PasswordCracker
 
     public void Main()
     {
-        codes = DataParser.SplitDataLine(AdventData2025.Day1Rotations, true);
+        codes = DataParser.SplitLines(AdventData2025.Day1Rotations, true);
         CrackPasswordsAdvanced();
     }
 

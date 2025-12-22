@@ -36,7 +36,7 @@ public class Day11ServerConnections
         Dictionary<string, ServerSlot> slots = [];
         public ServerRack(string input)
         {
-            var lines = DataParser.SplitDataLine(input);
+            var lines = DataParser.SplitLines(input);
             lines.Add("out:");
             slots = lines
                 .Select(line => new ServerSlot(line))

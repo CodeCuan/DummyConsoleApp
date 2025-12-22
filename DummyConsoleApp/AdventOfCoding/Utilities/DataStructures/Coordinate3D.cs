@@ -18,9 +18,9 @@ public class Coordinate3D
         Z = z;
     }
 
-    public Coordinate3D(string input)
+    public Coordinate3D(string input, char seperator = ',')
     {
-        var parts = input.Split(',', StringSplitOptions.RemoveEmptyEntries);
+        var parts = input.Split(seperator, StringSplitOptions.RemoveEmptyEntries);
         X = long.Parse(parts[0]);
         Y = long.Parse(parts[1]);
         Z = long.Parse(parts[2]);
@@ -42,5 +42,10 @@ public class Coordinate3D
     public double GetDistanceSquared(Coordinate3D toPoint)
     {
         return Math.Pow(X - toPoint.X, 2) + Math.Pow(Y - toPoint.Y, 2) + Math.Pow(Z - toPoint.Z, 2);
+    }
+
+    public long GetVolume()
+    {
+        return X * Y * Z;
     }
 }
