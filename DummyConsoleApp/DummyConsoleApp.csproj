@@ -19,4 +19,14 @@
     <PackageReference Include="VersOne.Epub" Version="3.3.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AdventOfCoding\Data\AdventData2015Files\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AdventOfCoding\Data\AdventData2015Files\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

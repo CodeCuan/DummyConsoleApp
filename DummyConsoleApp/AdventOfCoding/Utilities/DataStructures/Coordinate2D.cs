@@ -10,13 +10,12 @@ public class Coordinate2D
     public long X { get; set; }
     public long Y { get; set; }
 
-    public CoordinateKey Key { get; set; }
+    public CoordinateKey Key { get { return new(X, Y); } }
 
     public Coordinate2D(long x, long y)
     {
         X = x;
         Y = y;
-        Key = new(X, Y);
     }
 
     public Coordinate2D(string input)
@@ -24,7 +23,6 @@ public class Coordinate2D
         var parts = input.Split(',', StringSplitOptions.RemoveEmptyEntries);
         X = long.Parse(parts[0]);
         Y = long.Parse(parts[1]);
-        Key = new(X, Y);
     }
 
     public Coordinate2D GetAbsoluteDistance(Coordinate2D toPoint)

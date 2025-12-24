@@ -4,7 +4,7 @@ using DummyConsoleApp.AdventOfCoding.Utilities.DataStructures;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2015;
 
-public class Day2PaperSizing
+public class Day02PaperSizing
 {
     public void Main()
     {

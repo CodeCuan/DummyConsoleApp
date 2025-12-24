@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2015;
 
-public class Day1ApartmentSize
+public class Day01ApartmentSize
 {
     public void Main() {
         var stoppy = Stopwatch.StartNew();

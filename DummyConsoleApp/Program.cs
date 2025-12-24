@@ -1,4 +1,4 @@
 ﻿using DummyConsoleApp.AdventOfCoding.Advent2015;
 
-Day2PaperSizing solution = new();
+Day11PasswordGenerator solution = new();
 solution.Main();
