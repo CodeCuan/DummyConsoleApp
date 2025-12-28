@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="AdventOfCoding\Data\AdventData2015Files\" />
+    <Folder Include="AdventOfCoding\Data\AdventData2015Files\" />
   </ItemGroup>
 
   <ItemGroup>

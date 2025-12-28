@@ -5,6 +5,7 @@ public class DefaultDictionary<TKey, TValue>
     where TValue : new()
     where TKey : notnull
 {
+    public bool SetOnGet { get; set; } = true;
     public new TValue this[TKey key]
     {
         get
@@ -12,6 +13,8 @@ public class DefaultDictionary<TKey, TValue>
             if (!TryGetValue(key, out TValue? val))
             {
                 val = new();
+                if (!SetOnGet)
+                    return val;
                 Add(key, val);
             }
             return val;
