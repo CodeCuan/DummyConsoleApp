@@ -10,13 +10,13 @@ public class Day18LightMap
     public void Main()
     {
         log = true;
-        CountLights(@".#.#.#
+        Console.WriteLine($"Sample has {CountLights(@".#.#.#
 ...##.
 #....#
 ..#...
 #.#..#
 ####..
-", 6, true);
+", 5, true)}");
         log = false;
         Console.WriteLine("Day 18 Light Map");
         var lightCount = CountLights(AdventData2015.Day18LightMap);
@@ -106,6 +106,7 @@ public class Day18LightMap
     public void ParseMap(string input, bool setCorners)
     {
         LightMap = [];
+        corners = [];
         LightMap.SetOnGet = false;
         var y = 0;
         foreach (var line in DataParser.SplitLines(input))
@@ -116,10 +117,10 @@ public class Day18LightMap
                 LightMap[new Coordinate2D.CoordinateKey(x, y)] = (lightChar == '#');
                 x++;
             }
-            maxX = x;
+            maxX = x-1;
             y++;
         }
-        maxY = y;
+        maxY = y-1;
         corners.Add(new(0, 0));
         corners.Add(new(0, maxY));
         corners.Add(new(maxX, 0));
