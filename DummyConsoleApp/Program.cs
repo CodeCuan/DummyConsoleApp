@@ -1,4 +1,4 @@
 ﻿using DummyConsoleApp.AdventOfCoding.Advent2015;
 
-Day20HouseGifts solution = new();
+Day22WizardBattle solution = new();
 solution.Main();
