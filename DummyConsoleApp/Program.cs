@@ -1,4 +1,4 @@
 ﻿using DummyConsoleApp.AdventOfCoding.Advent2015;
 
-Day11PasswordGenerator solution = new();
+Day14ReindeerSpeed solution = new();
 solution.Main();
