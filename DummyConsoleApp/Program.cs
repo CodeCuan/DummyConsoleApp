@@ -1,4 +1,4 @@
-﻿using DummyConsoleApp.AdventOfCoding.Advent2015;
+using DummyConsoleApp.AdventOfCoding.Advent2015;
 
-Day14ReindeerSpeed solution = new();
+Day24BoxWeights solution = new();
 solution.Main();
