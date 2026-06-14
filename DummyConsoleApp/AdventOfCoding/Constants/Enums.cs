@@ -11,7 +11,7 @@ namespace DummyConsoleApp.AdventOfCoding.Constants
         UpLeft,
         UpRight,
         DownLeft,
-        DownRight
+        DownRight,
     }
 
     public enum CardinalDirection
@@ -19,8 +19,6 @@ namespace DummyConsoleApp.AdventOfCoding.Constants
         Up,
         Down,
         Left,
-        Right
+        Right,
     }
-
-
 }

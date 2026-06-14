@@ -4,7 +4,11 @@ namespace DummyConsoleApp.AdventOfCoding.Utilities.Extensions;
 
 public static class DictionaryExtensions
 {
-    public static void AddOrIncrement<TKey, TValue>(this Dictionary<TKey, TValue> myDictionary, TKey key, TValue incrementValue)
+    public static void AddOrIncrement<TKey, TValue>(
+        this Dictionary<TKey, TValue> myDictionary,
+        TKey key,
+        TValue incrementValue
+    )
         where TValue : INumber<TValue>
         where TKey : notnull
     {
@@ -18,10 +22,13 @@ public static class DictionaryExtensions
         }
     }
 
-    public static void AddOrIncrement<TKey, TValue>(this Dictionary<TKey, TValue> myDictionary, IEnumerable<TKey> keys, TValue incrementValue)
+    public static void AddOrIncrement<TKey, TValue>(
+        this Dictionary<TKey, TValue> myDictionary,
+        IEnumerable<TKey> keys,
+        TValue incrementValue
+    )
         where TValue : INumber<TValue>
         where TKey : notnull
-
     {
         foreach (var key in keys)
             myDictionary.AddOrIncrement(key, incrementValue);
@@ -40,7 +47,11 @@ public static class DictionaryExtensions
     //    }
     //}
 
-    public static void AddToList<TKey, TValue, TDictionary>(this TDictionary myDictionary, TKey key, TValue incrementValue)
+    public static void AddToList<TKey, TValue, TDictionary>(
+        this TDictionary myDictionary,
+        TKey key,
+        TValue incrementValue
+    )
         where TDictionary : IDictionary<TKey, List<TValue>>
         where TKey : notnull
     {

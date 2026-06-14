@@ -1,5 +1,5 @@
-﻿using Google.OrTools.ConstraintSolver;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using Google.OrTools.ConstraintSolver;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2015;
 
@@ -12,14 +12,23 @@ public class Day20HouseGifts
         var stoppy = Stopwatch.StartNew();
         var houseNum = GetMinHouseNumber(34000000, false);
         stoppy.Stop();
-        Console.WriteLine($"House number receiving at least 34,000,000 presents: {houseNum} . Completed in {stoppy.ElapsedMilliseconds} ms");
+        Console.WriteLine(
+            $"House number receiving at least 34,000,000 presents: {houseNum} . Completed in {stoppy.ElapsedMilliseconds} ms"
+        );
         stoppy.Restart();
         houseNum = GetMinHouseNumber(34000000, false, presentsPerHouse: 11, maxGifts: 50);
         stoppy.Stop();
-        Console.WriteLine($"House number receiving at least 34,000,000 presents: {houseNum} . Completed in {stoppy.ElapsedMilliseconds} ms");
+        Console.WriteLine(
+            $"House number receiving at least 34,000,000 presents: {houseNum} . Completed in {stoppy.ElapsedMilliseconds} ms"
+        );
     }
 
-    public int GetMinHouseNumber(int targetPresents, bool log, int presentsPerHouse = 10, int? maxGifts = null)
+    public int GetMinHouseNumber(
+        int targetPresents,
+        bool log,
+        int presentsPerHouse = 10,
+        int? maxGifts = null
+    )
     {
         int houseNumber = 1;
         while (true)
@@ -67,6 +76,7 @@ public class Day20HouseGifts
                     factors.Add(complement);
             }
         }
-        return factors.Where(f => f >= minNumber).ToList(); ;
+        return factors.Where(f => f >= minNumber).ToList();
+        ;
     }
 }

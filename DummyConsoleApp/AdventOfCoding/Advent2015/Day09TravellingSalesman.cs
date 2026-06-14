@@ -1,6 +1,6 @@
-﻿using DummyConsoleApp.AdventOfCoding.Data;
+﻿using System.Diagnostics;
+using DummyConsoleApp.AdventOfCoding.Data;
 using DummyConsoleApp.AdventOfCoding.Utilities;
-using System.Diagnostics;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2015;
 
@@ -12,12 +12,15 @@ public class Day09TravellingSalesman
         var stoppy = Stopwatch.StartNew();
         var minDistance = GetMinDistance(AdventData2015.Day9TravellingData, false);
         stoppy.Stop();
-        Console.WriteLine($"Minimum distance to travel all countries: {minDistance} . Took {stoppy.ElapsedMilliseconds} ms");
+        Console.WriteLine(
+            $"Minimum distance to travel all countries: {minDistance} . Took {stoppy.ElapsedMilliseconds} ms"
+        );
         stoppy.Restart();
         var maxDistance = GetMinDistance(AdventData2015.Day9TravellingData, true);
         stoppy.Stop();
-        Console.WriteLine($"Maximum distance to travel all countries: {maxDistance} . Took {stoppy.ElapsedMilliseconds} ms");
-
+        Console.WriteLine(
+            $"Maximum distance to travel all countries: {maxDistance} . Took {stoppy.ElapsedMilliseconds} ms"
+        );
     }
 
     public int GetMinDistance(string input, bool useMax)
@@ -31,17 +34,19 @@ public class Day09TravellingSalesman
         ArgumentNullException.ThrowIfNull(bestChain);
         var bestDistance = GetChainLength(bestChain, useMax);
         return bestDistance;
-
     }
 
     private int GetChainLength(List<CountryConnection> chain, bool useMax)
     {
         var chainLength = chain.Sum(connection => connection.distance);
-        return chainLength - (
-            useMax
-            ? chain.Min(connection => connection.distance)
-            : chain.Max(connection => connection.distance));
+        return chainLength
+            - (
+                useMax
+                    ? chain.Min(connection => connection.distance)
+                    : chain.Max(connection => connection.distance)
+            );
     }
+
     private Dictionary<string, CountryNode> InitNodes(string input)
     {
         Dictionary<string, CountryNode> CountryNodes = [];
@@ -67,22 +72,28 @@ public class Day09TravellingSalesman
         return CountryNodes;
     }
 
-
     public class CountryNode
     {
         public Dictionary<CountryNode, int> Connections = [];
         public string Name;
+
         public CountryNode(string name)
         {
             Name = name;
         }
 
-        public List<List<CountryConnection>> GetChains(HashSet<string> processedNodes, CountryNode seedNode)
+        public List<List<CountryConnection>> GetChains(
+            HashSet<string> processedNodes,
+            CountryNode seedNode
+        )
         {
             processedNodes.Add(Name);
             List<List<CountryConnection>> allChains = [];
-            foreach (var connection in Connections
-                .Where(Connections => !processedNodes.Contains(Connections.Key.Name)))
+            foreach (
+                var connection in Connections.Where(Connections =>
+                    !processedNodes.Contains(Connections.Key.Name)
+                )
+            )
             {
                 HashSet<string> subChainSet = [.. processedNodes];
                 var subChains = connection.Key.GetChains(subChainSet, seedNode);
@@ -104,11 +115,13 @@ public class Day09TravellingSalesman
     {
         CountryNode nextCountry;
         public int distance;
+
         public CountryConnection(CountryNode country, int dist)
         {
             nextCountry = country;
             distance = dist;
         }
+
         public override string ToString()
         {
             return $"{nextCountry.Name}|{distance}";

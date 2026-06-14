@@ -1,42 +1,28 @@
-﻿namespace DummyConsoleApp.AdventOfCoding.Utilities.Extensions;
+﻿using Combinatorics.Collections;
+
+namespace DummyConsoleApp.AdventOfCoding.Utilities.Extensions;
 
 public static class CominatoricsExtensions
 {
-    public static IEnumerable<List<TEntry>> GetCombinations<TEntry>(this IList<TEntry> entries, int outputSize)
+    public static IEnumerable<List<TEntry>> GetCombinations<TEntry>(
+        this IList<TEntry> entries,
+        int outputSize
+    )
     {
-        if (outputSize == 1)
+        var combinations = new Combinations<TEntry>(entries, outputSize);
+        foreach (var combination in combinations)
         {
-            foreach (var entry in entries)
-                yield return [entry];
-            yield break;
-        }
-        var unprocessed = entries.ToList();
-        foreach (var entry in entries)
-        {
-            unprocessed.Remove(entry);
-            foreach (var entry2 in unprocessed)
-            {
-                if (outputSize == 2)
-                {
-                    yield return new List<TEntry> { entry, entry2 };
-                }
-                else
-                {
-                    foreach (var subCombination in unprocessed.GetCombinations(outputSize - 1))
-                    {
-                        subCombination.Add(entry);
-                        yield return subCombination;
-                    }
-                }
-            }
+            yield return combination.ToList();
         }
     }
 
-    public static IEnumerable<List<TEntry>> GetChains<TEntry>(this ICollection<TEntry> entries)
-        => entries.GetChains([]);
+    public static IEnumerable<List<TEntry>> GetChains<TEntry>(this ICollection<TEntry> entries) =>
+        entries.GetChains([]);
 
-
-    public static IEnumerable<List<TEntry>> GetChains<TEntry>(this ICollection<TEntry> entries, List<TEntry> activeChain)
+    public static IEnumerable<List<TEntry>> GetChains<TEntry>(
+        this ICollection<TEntry> entries,
+        List<TEntry> activeChain
+    )
     {
         var unprocessed = entries.Where(entries => !activeChain.Contains(entries)).ToList();
         foreach (var entry in unprocessed)
@@ -46,7 +32,7 @@ public static class CominatoricsExtensions
                 yield return newActiveChain;
             else
             {
-                foreach(var subChain in unprocessed.GetChains(newActiveChain))
+                foreach (var subChain in unprocessed.GetChains(newActiveChain))
                 {
                     yield return subChain;
                 }

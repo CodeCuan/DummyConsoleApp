@@ -7,6 +7,7 @@ namespace DummyConsoleApp.AdventOfCoding.Advent2025;
 public class Day07TachyonBeam
 {
     public int splits = 0;
+
     public void Main()
     {
         Console.WriteLine("Day 7 Tachyon Beam");
@@ -36,11 +37,9 @@ public class Day07TachyonBeam
         foreach (var beam in beams)
         {
             var isSplit = dataLine[beam] == '^';
-            IEnumerable<int> newBeams = isSplit
-                ? [beam + 1, beam - 1]
-                : [beam];
+            IEnumerable<int> newBeams = isSplit ? [beam + 1, beam - 1] : [beam];
             newBeamCollection.AddRange(newBeams);
-            if(isSplit)
+            if (isSplit)
                 splits++;
         }
         return newBeamCollection;
@@ -49,9 +48,7 @@ public class Day07TachyonBeam
     public long ProcessBeamTimelines(string input)
     {
         var data = DataParser.ParseDataIntoString(input);
-        Dictionary<int, long> activeBeam = new() {
-            { data.First().IndexOf('S'), 1 }
-        };
+        Dictionary<int, long> activeBeam = new() { { data.First().IndexOf('S'), 1 } };
         foreach (var dataLine in data.Skip(1))
         {
             activeBeam = ProcessTimelines(activeBeam, dataLine);
@@ -61,19 +58,20 @@ public class Day07TachyonBeam
         return timelines;
     }
 
-    public Dictionary<int, long> ProcessTimelines(Dictionary<int, long> beamTimelines, List<char> dataLine)
+    public Dictionary<int, long> ProcessTimelines(
+        Dictionary<int, long> beamTimelines,
+        List<char> dataLine
+    )
     {
         Dictionary<int, long> newTimelines = new();
         foreach (var timeline in beamTimelines)
         {
-            IEnumerable<int> newBeams = dataLine[timeline.Key] == '^'
-                ? [timeline.Key + 1, timeline.Key - 1]
-                : [timeline.Key];
+            IEnumerable<int> newBeams =
+                dataLine[timeline.Key] == '^'
+                    ? [timeline.Key + 1, timeline.Key - 1]
+                    : [timeline.Key];
             newTimelines.AddOrIncrement(newBeams, timeline.Value);
         }
         return newTimelines;
     }
 }
-
-
-

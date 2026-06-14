@@ -8,14 +8,19 @@ using ShellProgressBar;
 
 namespace DummyConsoleApp.Misc
 {
-
     public class PrisonerProblemHandler
     {
         int prisonerCount = 100;
         int maxChainLength = 50;
         int minChainLength = 1;
         int logLevel = 1;
-        public PrisonerProblemHandler(int prisonerCount = 100, int maxChainLength = 50, int minChainLength = 1, int logLevel = 1)
+
+        public PrisonerProblemHandler(
+            int prisonerCount = 100,
+            int maxChainLength = 50,
+            int minChainLength = 1,
+            int logLevel = 1
+        )
         {
             this.prisonerCount = prisonerCount;
             this.maxChainLength = maxChainLength;
@@ -38,9 +43,12 @@ namespace DummyConsoleApp.Misc
             var statuses = Enumerable.Range(0, testCount).Select(result => Escaped()).ToList();
             var successes = statuses.Count(result => result);
 
-            Console.WriteLine($"Tests finished! {successes} out of {statuses.Count} prisoner batches escaped.");
+            Console.WriteLine(
+                $"Tests finished! {successes} out of {statuses.Count} prisoner batches escaped."
+            );
             Console.WriteLine($"Probability: ~{Math.Round(100M * successes / statuses.Count, 2)}%");
         }
+
         public async Task ProcessManyAsync(int testCount, int asyncronicity = 1)
         {
             var pollyLimiter = new SemaphoreSlim(asyncronicity);
@@ -48,7 +56,6 @@ namespace DummyConsoleApp.Misc
             List<Task<bool>> taskList = new List<Task<bool>>();
             using (var progressBar = new ProgressBar(testCount, "Running Tests"))
             {
-
                 for (int i = 0; i < testCount; i++)
                 {
                     taskList.Add(Task.Run(Escaped));
@@ -67,15 +74,24 @@ namespace DummyConsoleApp.Misc
 
             var successes = results.Count(result => result);
 
-            Console.WriteLine($"Tests finished! {successes} out of {results.Count} prisoner batches escaped.");
+            Console.WriteLine(
+                $"Tests finished! {successes} out of {results.Count} prisoner batches escaped."
+            );
             Console.WriteLine($"Probability: ~{Math.Round(100M * successes / results.Count, 2)}%");
         }
 
         public bool Escaped()
         {
-            var boxes = Enumerable.Range(0, prisonerCount).Select(boxNumber => new EntityWithNumber()).ToList();
+            var boxes = Enumerable
+                .Range(0, prisonerCount)
+                .Select(boxNumber => new EntityWithNumber())
+                .ToList();
             int boxNum = 0;
-            foreach (var prisoner in Enumerable.Range(0, prisonerCount).OrderBy(prisoner => Guid.NewGuid()))
+            foreach (
+                var prisoner in Enumerable
+                    .Range(0, prisonerCount)
+                    .OrderBy(prisoner => Guid.NewGuid())
+            )
             {
                 boxes[boxNum].number = prisoner;
                 boxNum++;
@@ -86,7 +102,8 @@ namespace DummyConsoleApp.Misc
             {
                 if (processedPrisoners.Contains(prisonerNumber))
                     continue;
-                var prisonerChain = GetChainFromNumber(prisonerNumber, prisonerNumber, boxes).ToList();
+                var prisonerChain = GetChainFromNumber(prisonerNumber, prisonerNumber, boxes)
+                    .ToList();
                 chains.Add(prisonerChain);
                 foreach (var processedPrisoner in prisonerChain)
                     processedPrisoners.Add(processedPrisoner);
@@ -96,7 +113,9 @@ namespace DummyConsoleApp.Misc
             var hasEscaped = maxChainLength >= maxChain && minChainLength <= minChain;
 
             if (logLevel > 0)
-                Console.WriteLine($"Prisoners processed through the system. Chain lengths {minChain}-{maxChain}. {(hasEscaped ? "They escaped!" : "They did not escape.")}");
+                Console.WriteLine(
+                    $"Prisoners processed through the system. Chain lengths {minChain}-{maxChain}. {(hasEscaped ? "They escaped!" : "They did not escape.")}"
+                );
             if (logLevel > 1)
             {
                 Console.WriteLine("Chains:");
@@ -113,7 +132,12 @@ namespace DummyConsoleApp.Misc
             }
             return hasEscaped;
         }
-        private IEnumerable<int> GetChainFromNumber(int seedNum, int activeNum, List<EntityWithNumber> boxes)
+
+        private IEnumerable<int> GetChainFromNumber(
+            int seedNum,
+            int activeNum,
+            List<EntityWithNumber> boxes
+        )
         {
             var box = boxes[activeNum];
             yield return box.number;
@@ -121,15 +145,17 @@ namespace DummyConsoleApp.Misc
                 foreach (var chainNum in GetChainFromNumber(seedNum, box.number, boxes))
                     yield return chainNum;
         }
+
         class EntityWithNumber
         {
             public EntityWithNumber() { }
+
             public EntityWithNumber(int boxNum)
             {
                 number = boxNum;
             }
+
             public int number = 0;
         }
     }
-
 }

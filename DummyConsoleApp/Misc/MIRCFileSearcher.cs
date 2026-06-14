@@ -10,6 +10,7 @@ namespace DummyConsoleApp.Misc
     internal class MIRCFileSearcher
     {
         public MIRCFileSearcher() { }
+
         public async Task Run(string fileName)
         {
             HashSet<string> files = new HashSet<string>();
@@ -30,7 +31,6 @@ namespace DummyConsoleApp.Misc
             }
         }
 
-
         public bool FilterOutLine(string line, bool strict = true)
         {
             var toLowerLine = line.ToLower();
@@ -41,18 +41,28 @@ namespace DummyConsoleApp.Misc
             return false;
         }
     }
+
     public class BookGroupParser
     {
-        private static readonly HashSet<string> RedHerrings = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-            {
-                "US", "retail", "epub", "H", "UK", "SS", "SSC"
-            };
-        private static readonly HashSet<string> RegexRedHerrings = new HashSet<string>() {
+        private static readonly HashSet<string> RedHerrings = new HashSet<string>(
+            StringComparer.OrdinalIgnoreCase
+        )
+        {
+            "US",
+            "retail",
+            "epub",
+            "H",
+            "UK",
+            "SS",
+            "SSC",
+        };
+        private static readonly HashSet<string> RegexRedHerrings = new HashSet<string>()
+        {
             @"v[0-9]\.[0-9]+",
         };
+
         private static bool PassesExtraFilter(string text)
         {
-
             foreach (var regexRedHerring in RegexRedHerrings)
                 if (Regex.IsMatch(text, regexRedHerring, RegexOptions.IgnoreCase))
                     return false;
@@ -116,7 +126,8 @@ namespace DummyConsoleApp.Misc
             foreach (var line in unmatchedLines.ToList())
             {
                 var possibleMatch = groupedLines.Keys.FirstOrDefault(bookName =>
-                    line.Contains(bookName, StringComparison.OrdinalIgnoreCase));
+                    line.Contains(bookName, StringComparison.OrdinalIgnoreCase)
+                );
 
                 if (possibleMatch != null)
                 {
@@ -136,7 +147,14 @@ namespace DummyConsoleApp.Misc
 
                     // Check if this text is contained in any categorized entry
                     var possibleMatch = groupedLines.Keys.FirstOrDefault(key =>
-                        groupedLines[key].Any(lineValue => lineValue.Contains(extractedText, StringComparison.OrdinalIgnoreCase)));
+                        groupedLines[key]
+                            .Any(lineValue =>
+                                lineValue.Contains(
+                                    extractedText,
+                                    StringComparison.OrdinalIgnoreCase
+                                )
+                            )
+                    );
 
                     if (possibleMatch != null)
                     {

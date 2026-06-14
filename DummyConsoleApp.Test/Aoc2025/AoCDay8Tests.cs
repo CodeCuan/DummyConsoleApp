@@ -5,10 +5,12 @@ namespace DummyConsoleApp.Test.Aoc2025;
 public class AoCDay8Tests
 {
     Day08JunctionBoxes sut = new Day08JunctionBoxes();
+
     [Fact]
     public void CircuitSize_WithSampleData_CalculatesCorrectly()
     {
-        var input = @"162,817,812
+        var input =
+            @"162,817,812
 57,618,57
 906,360,560
 592,479,940

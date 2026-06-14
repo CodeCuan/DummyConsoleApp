@@ -1,5 +1,5 @@
-﻿using DummyConsoleApp.AdventOfCoding.Data;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using DummyConsoleApp.AdventOfCoding.Data;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2015;
 
@@ -11,19 +11,23 @@ public class Day22WizardBattle
         var stoppy = Stopwatch.StartNew();
         var cheapestBattle = GetCheapestBattle();
         stoppy.Stop();
-        Console.WriteLine($"Cheapest battle costs {cheapestBattle.GetMpSpent()} mana. (calculated in {stoppy.ElapsedMilliseconds} ms)");
-        Console.WriteLine($"Spells used: {string.Join(", ", cheapestBattle.usedSpells.Select(s => s.name))}");
+        Console.WriteLine(
+            $"Cheapest battle costs {cheapestBattle.GetMpSpent()} mana. (calculated in {stoppy.ElapsedMilliseconds} ms)"
+        );
+        Console.WriteLine(
+            $"Spells used: {string.Join(", ", cheapestBattle.usedSpells.Select(s => s.name))}"
+        );
         stoppy.Restart();
         var hardCheapestBattle = GetCheapestBattle(true);
         stoppy.Stop();
-        Console.WriteLine($"Cheapest hard mode battle costs {hardCheapestBattle.GetMpSpent()} mana. (calculated in {stoppy.ElapsedMilliseconds} ms)");
-        Console.WriteLine($"Spells used: {string.Join(", ", hardCheapestBattle.usedSpells.Select(s => s.name))}");
+        Console.WriteLine(
+            $"Cheapest hard mode battle costs {hardCheapestBattle.GetMpSpent()} mana. (calculated in {stoppy.ElapsedMilliseconds} ms)"
+        );
+        Console.WriteLine(
+            $"Spells used: {string.Join(", ", hardCheapestBattle.usedSpells.Select(s => s.name))}"
+        );
         hardCheapestBattle.LogBattle();
-
-
     }
-
-
 
     private Battle GetCheapestBattle(bool hardMode = false)
     {
@@ -56,6 +60,7 @@ public class Day22WizardBattle
     private class Battle
     {
         public Battle() { }
+
         public Battle(Battle battle)
         {
             usedSpells = [.. battle.usedSpells];
@@ -64,13 +69,13 @@ public class Day22WizardBattle
             boss = new Boss(battle.boss);
             damagePlayer = battle.damagePlayer;
         }
+
         public List<Spell> usedSpells = [];
         public Dictionary<Spell, int> activeEffects = [];
         public Player PlayerStatus = new();
         public bool Won = false;
         public Boss boss = new();
         public bool damagePlayer = false;
-
 
         public IEnumerable<Battle> GetRounds()
         {
@@ -172,24 +177,29 @@ public class Day22WizardBattle
             {
                 roundNo++;
                 battle.TryDoPlayerTurnAndAddSpell(spell);
-                Console.WriteLine($"R{roundNo} {spell.name}: {battle.PlayerStatus.hitPoints} hp, {battle.PlayerStatus.armor} armor, {battle.PlayerStatus.manaPoints} mana. Boss at {battle.boss.hp}. Effects {string.Join(", ", battle.activeEffects.Select(kvp => $"{kvp.Key.name}:{kvp.Value}"))}");
+                Console.WriteLine(
+                    $"R{roundNo} {spell.name}: {battle.PlayerStatus.hitPoints} hp, {battle.PlayerStatus.armor} armor, {battle.PlayerStatus.manaPoints} mana. Boss at {battle.boss.hp}. Effects {string.Join(", ", battle.activeEffects.Select(kvp => $"{kvp.Key.name}:{kvp.Value}"))}"
+                );
                 roundNo++;
                 if (battle.boss.hp > 0)
                     battle.DoBossRound();
-                Console.WriteLine($"R{roundNo} Boss: {battle.PlayerStatus.hitPoints} hp, {battle.PlayerStatus.armor} armor, {battle.PlayerStatus.manaPoints} mana. Boss at {battle.boss.hp}. Effects {string.Join(", ", battle.activeEffects.Select(kvp => $"{kvp.Key.name}:{kvp.Value}"))}");
+                Console.WriteLine(
+                    $"R{roundNo} Boss: {battle.PlayerStatus.hitPoints} hp, {battle.PlayerStatus.armor} armor, {battle.PlayerStatus.manaPoints} mana. Boss at {battle.boss.hp}. Effects {string.Join(", ", battle.activeEffects.Select(kvp => $"{kvp.Key.name}:{kvp.Value}"))}"
+                );
             }
-
         }
     }
 
     private class Boss
     {
         public Boss() { }
+
         public Boss(Boss boss)
         {
             hp = boss.hp;
             damage = boss.damage;
         }
+
         public int hp = AdventData2015.Day22BossHp;
         public int damage = AdventData2015.Day22BossDamage;
     }
@@ -199,7 +209,9 @@ public class Day22WizardBattle
         public int hitPoints = 50;
         public int manaPoints = 500;
         public int armor = 0;
+
         public Player() { }
+
         public Player(Player player)
         {
             hitPoints = player.hitPoints;
@@ -225,11 +237,12 @@ public class Day22WizardBattle
         public int effectMana = 0;
     }
 
-    private static List<Spell> availableSpells = [
-        new("Misile", 53){initialDamage = 4 },
-        new("Drain", 73){initialDamage = 2, initialHeal = 2 },
-        new("Shield", 113){effectiveTurns = 6, effectArmor = 7 },
-        new("Poison", 173){effectiveTurns = 6, effectDamage = 3 },
-        new("Recharge", 229){effectiveTurns = 5, effectMana = 101 }
-        ];
+    private static List<Spell> availableSpells =
+    [
+        new("Misile", 53) { initialDamage = 4 },
+        new("Drain", 73) { initialDamage = 2, initialHeal = 2 },
+        new("Shield", 113) { effectiveTurns = 6, effectArmor = 7 },
+        new("Poison", 173) { effectiveTurns = 6, effectDamage = 3 },
+        new("Recharge", 229) { effectiveTurns = 5, effectMana = 101 },
+    ];
 }

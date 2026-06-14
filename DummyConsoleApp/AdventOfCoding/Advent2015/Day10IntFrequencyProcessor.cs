@@ -13,14 +13,18 @@ public class Day10IntFrequencyProcessor
         Console.WriteLine("Day 10 Int Frequency Processor");
         var starting = "1113222113";
         var stoppy = System.Diagnostics.Stopwatch.StartNew();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 50; i++)
+        {
             starting = ProcessString(starting);
         }
         stoppy.Stop();
-        Console.WriteLine($"Processed string - length is {starting.Length} . Processed in {stoppy.ElapsedMilliseconds}");
+        Console.WriteLine(
+            $"Processed string - length is {starting.Length} . Processed in {stoppy.ElapsedMilliseconds}"
+        );
     }
 
-    public string ProcessString(string input) { 
+    public string ProcessString(string input)
+    {
         string output = "";
         char currentChar = input[0];
         int currentCount = 1;

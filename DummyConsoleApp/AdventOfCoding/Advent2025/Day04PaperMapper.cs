@@ -5,12 +5,12 @@ namespace DummyConsoleApp.AdventOfCoding.Advent2025;
 
 public class Day04PaperMapper
 {
-
     private const char roll = '@';
     List<List<char>> rolls = [];
     int width;
     int height;
     bool logRolls = false;
+
     public void Main()
     {
         Console.WriteLine("Day 4 Paper Mapper");

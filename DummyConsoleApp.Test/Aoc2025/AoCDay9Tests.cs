@@ -9,7 +9,8 @@ public class AoCDay9Tests
     [Fact]
     public void LargestRectangle_WithSampleData_CalculatesCorrectly()
     {
-        var input = @"7,1
+        var input =
+            @"7,1
 11,1
 11,7
 9,7

@@ -1,5 +1,5 @@
-﻿using DummyConsoleApp.AdventOfCoding.Data;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+using DummyConsoleApp.AdventOfCoding.Data;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2024;
 
@@ -7,21 +7,22 @@ public class Advent2024Solution3
 {
     public int Solve(string input)
     {
-        return Regex.Matches(input, @"mul\((\-?\d+),(\-?\d+)\)")
-             .Select(m => (int.Parse(m.Groups[1].Value), int.Parse(m.Groups[2].Value)))
-             .Select(t => t.Item1 * t.Item2)
-             .Sum();
+        return Regex
+            .Matches(input, @"mul\((\-?\d+),(\-?\d+)\)")
+            .Select(m => (int.Parse(m.Groups[1].Value), int.Parse(m.Groups[2].Value)))
+            .Select(t => t.Item1 * t.Item2)
+            .Sum();
     }
 
     public int Solve2(string input)
     {
-
         var filtered = Regex.Replace(input, @"don't\(\).*?do\(\)", "");
         filtered = Regex.Replace(filtered, @"don't\(\).*?$", "");
-        return Regex.Matches(filtered, @"mul\((\-?\d+),(\-?\d+)\)")
-             .Select(m => (int.Parse(m.Groups[1].Value), int.Parse(m.Groups[2].Value)))
-             .Select(t => t.Item1 * t.Item2)
-             .Sum();
+        return Regex
+            .Matches(filtered, @"mul\((\-?\d+),(\-?\d+)\)")
+            .Select(m => (int.Parse(m.Groups[1].Value), int.Parse(m.Groups[2].Value)))
+            .Select(t => t.Item1 * t.Item2)
+            .Sum();
     }
 
     internal void Main()

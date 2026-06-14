@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using ShellProgressBar;
-
 #nullable disable
 using static DummyConsoleApp.Misc.DeckOfCards;
 
@@ -13,14 +12,13 @@ namespace DummyConsoleApp.Misc
 {
     internal class BlackJackSimulator
     {
-
         DeckOfCards deckManager = null;
         List<Card> cards = null;
         List<Card> dealerHand = new List<Card>();
         List<Card> playerHand = new List<Card>();
+
         public static void SimulateTests(int testCount, bool hit, bool logHands = false)
         {
-
             List<bool> results = new List<bool>();
             ProgressBar progressBar = null;
             if (!logHands)
@@ -40,20 +38,24 @@ namespace DummyConsoleApp.Misc
                 progressBar.Dispose();
             var wins = results.Count(result => result);
 
-            Console.WriteLine($"Tests finished! {(hit ? "We chose to hit!" : "We chose to stand!")} {wins} out of {testCount} hands won.");
+            Console.WriteLine(
+                $"Tests finished! {(hit ? "We chose to hit!" : "We chose to stand!")} {wins} out of {testCount} hands won."
+            );
             Console.WriteLine($"Probability: ~{Math.Round(100M * wins / testCount, 2)}%");
-
         }
+
         public bool DoesWinLogHands(bool hit)
         {
             var doesWin = DoesWin(hit);
-            Console.WriteLine($"We {(doesWin ? "Won" : "Lost")}! D{CountCards(dealerHand)} P{CountCards(playerHand)}");
+            Console.WriteLine(
+                $"We {(doesWin ? "Won" : "Lost")}! D{CountCards(dealerHand)} P{CountCards(playerHand)}"
+            );
             Console.WriteLine($"Full hands: Dealer {string.Join(", ", dealerHand)}");
             Console.WriteLine($"Full hands: Player {string.Join(", ", playerHand)}");
 
-
             return doesWin;
         }
+
         public bool DoesWin(bool hit)
         {
             deckManager = new DeckOfCards();
@@ -81,6 +83,7 @@ namespace DummyConsoleApp.Misc
                 return true;
             return playerValue > dealerValue;
         }
+
         int BuildDealerHand()
         {
             while (true)
@@ -91,6 +94,7 @@ namespace DummyConsoleApp.Misc
                 dealerHand.Add(deckManager.Deal());
             }
         }
+
         List<Card> BuildDeckTo16()
         {
             int count = 0;
@@ -112,7 +116,7 @@ namespace DummyConsoleApp.Misc
                         if (bestHand > 16)
                         {
                             deckManager.ShuffleDeck();
-                            return BuildDeckTo16();//this is too good a hand, gotta bail
+                            return BuildDeckTo16(); //this is too good a hand, gotta bail
                         }
                     }
                 }
@@ -137,6 +141,5 @@ namespace DummyConsoleApp.Misc
                 total += 10;
             return total;
         }
-
     }
 }

@@ -9,6 +9,7 @@ namespace DummyConsoleApp
     public static class StaticHelpers
     {
         private static Random rng = new Random();
+
         public static void Shuffle<T>(this IList<T> list)
         {
             int n = list.Count;
@@ -22,5 +23,4 @@ namespace DummyConsoleApp
             }
         }
     }
-
 }

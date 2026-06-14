@@ -11,7 +11,6 @@ public class Day06MathHomework
         SolveProblems(AdventData2025.Day6MathHomework);
 
         SolveProblems(AdventData2025.Day6MathHomework, false);
-
     }
 
     List<MathProblem> mathProblems = [];
@@ -30,7 +29,6 @@ public class Day06MathHomework
         }
         Console.WriteLine($"Total of all solutions: {total}");
         return total;
-
     }
 
     public void SetDataSimple(string input)
@@ -47,13 +45,10 @@ public class Day06MathHomework
         {
             var op = operatorLine[i][0];
             var inputs = dataLines.Select(row => row[i]).ToList();
-            mathProblems.Add(new MathProblem
-            {
-                operatorValue = op,
-                inputValues = inputs
-            });
+            mathProblems.Add(new MathProblem { operatorValue = op, inputValues = inputs });
         }
     }
+
     public void SetData(string input)
     {
         mathProblems = [];
@@ -63,14 +58,9 @@ public class Day06MathHomework
         for (int i = 0; i < lines.First().Length; i++)
         {
             var dataInput = new String(
-                lines
-                    .Take(lines.Count - 1)
-                    .Select(line => line[i])
-                    .ToArray()
-                );
-            var op = operatorLine.Length > i
-                ? operatorLine[i]
-                : ' ';
+                lines.Take(lines.Count - 1).Select(line => line[i]).ToArray()
+            );
+            var op = operatorLine.Length > i ? operatorLine[i] : ' ';
 
             if (!string.IsNullOrWhiteSpace(dataInput))
             {
@@ -97,6 +87,7 @@ public class Day06MathHomework
         public char operatorValue;
         public List<int> inputValues = [];
         public long solution;
+
         public void Solve()
         {
             if (inputValues.Count == 0)

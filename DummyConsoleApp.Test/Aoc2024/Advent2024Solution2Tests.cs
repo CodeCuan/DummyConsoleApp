@@ -22,13 +22,13 @@ namespace DummyConsoleApp.Test.Aoc2024
         [InlineData(new int[] { 5, 4, 3, 2, 1 }, true)]
         [InlineData(new int[] { 5, 6, 3, 2, 1 }, true)]
         [InlineData(new int[] { 5, 6, 3, 2, 3 }, false)]
-
         public void TestIsSafeReportAdvanced(int[] reportArray, bool expected)
         {
             var report = reportArray.ToList();
             var result = sut.IsSafeReport(report);
             Assert.Equal(expected, result);
         }
+
         [Theory]
         [InlineData("7 6 4 2 1", true)]
         [InlineData("1 2 7 8 9", false)]
@@ -41,14 +41,11 @@ namespace DummyConsoleApp.Test.Aoc2024
         [InlineData("1 2 3 4 17", true)]
         [InlineData("1 17 2", true)]
         [InlineData("1 5 5", false)]
-
-
         public void TestIsSafeReportAdvancedString(string reportArray, bool expected)
         {
             var reportData = DataParser.ParseDataLine(reportArray);
             var result = sut.IsSafeReport(reportData);
             Assert.Equal(expected, result);
         }
-
     }
 }

@@ -16,7 +16,9 @@ public class Day16AuntChecker
             Requirements[parts[0]] = int.Parse(parts[1]);
         }
     }
-    public const string requirementsInput = @"children: 3
+
+    public const string requirementsInput =
+        @"children: 3
 cats: 7
 samoyeds: 2
 pomeranians: 3
@@ -29,8 +31,8 @@ perfumes: 1";
     public static HashSet<string> GreaterThan = ["cats", "trees"];
     public static HashSet<string> LessThan = ["pomeranians", "goldfish"];
 
-
     public Dictionary<string, int> Requirements = [];
+
     public void Main()
     {
         Console.WriteLine("Day 16 Aunt Checker");

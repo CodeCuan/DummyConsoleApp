@@ -1,16 +1,17 @@
-﻿using DummyConsoleApp.AdventOfCoding.Advent2025;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DummyConsoleApp.AdventOfCoding.Advent2025;
 
 namespace DummyConsoleApp.Test.Aoc2025;
 
 public class AoCDay7Tests
 {
     private Day07TachyonBeam sut = new();
-    private const string TestData = @".......S.......
+    private const string TestData =
+        @".......S.......
 ...............
 .......^.......
 ...............
@@ -50,5 +51,4 @@ public class AoCDay7Tests
         // Assert
         Assert.Equal(expected, result);
     }
-
 }

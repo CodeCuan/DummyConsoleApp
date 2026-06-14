@@ -1,5 +1,5 @@
-﻿using DummyConsoleApp.AdventOfCoding.Utilities.DataStructures;
-using System.Data;
+﻿using System.Data;
+using DummyConsoleApp.AdventOfCoding.Utilities.DataStructures;
 
 namespace DummyConsoleApp.AdventOfCoding.Utilities;
 
@@ -19,7 +19,7 @@ public class DataParser
     {
         List<int> partsList = new List<int>();
         IEnumerable<string> parts = noSeperator
-            ? input.ToArray().Select(x => x.ToString())    
+            ? input.ToArray().Select(x => x.ToString())
             : input.Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
 
         foreach (var part in parts)
@@ -31,22 +31,23 @@ public class DataParser
 
     public static List<string> SplitLines(string input, bool toLower = false, bool trim = true)
     {
-        return input.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
+        return input
+            .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
             .Select(row => FormatLine(row, toLower, trim))
             .ToList();
     }
 
-    private static string FormatLine(string line, bool toLower, bool trim) {
+    private static string FormatLine(string line, bool toLower, bool trim)
+    {
         if (toLower)
             line = line.ToLower();
-        return trim
-            ? line.Trim()
-            : line;
+        return trim ? line.Trim() : line;
     }
 
     public static List<long> SplitDataLineToLong(string input)
     {
-        return input.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
+        return input
+            .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
             .Select(long.Parse)
             .ToList();
     }
@@ -63,7 +64,8 @@ public class DataParser
 
     public static List<Coordinate3D> ParseDataIntoCoordinate3D(string input)
     {
-        return input.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
+        return input
+            .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
             .Select(row => new Coordinate3D(input))
             .ToList();
     }

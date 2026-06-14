@@ -7,8 +7,8 @@ public class Day01PasswordCracker
 {
     List<string> codes = [];
     const int startingPos = 50;
-    public Day01PasswordCracker() { 
-    }
+
+    public Day01PasswordCracker() { }
 
     public void Main()
     {
@@ -16,8 +16,8 @@ public class Day01PasswordCracker
         CrackPasswordsAdvanced();
     }
 
-    public void CrackPasswords() {
-
+    public void CrackPasswords()
+    {
         int password = 0;
         int position = startingPos;
         foreach (var code in codes)
@@ -48,13 +48,9 @@ public class Day01PasswordCracker
             var steps = int.Parse(code.Substring(1));
             password += AdjustLargeRotation(ref steps);
             var positionWasZero = position == 0;
-            position = direction == 'l' 
-                ? position - steps 
-                : position + steps;
+            position = direction == 'l' ? position - steps : position + steps;
 
-            if (!positionWasZero
-                && (Math.Abs(position) >= 100
-                    || position <= 0))
+            if (!positionWasZero && (Math.Abs(position) >= 100 || position <= 0))
                 password++;
 
             position = (position + 100) % 100;
@@ -63,7 +59,8 @@ public class Day01PasswordCracker
         return password;
     }
 
-    private static int AdjustLargeRotation(ref int rotation) {
+    private static int AdjustLargeRotation(ref int rotation)
+    {
         var turns = Math.Abs(rotation / 100);
         rotation = rotation % 100;
         return turns;

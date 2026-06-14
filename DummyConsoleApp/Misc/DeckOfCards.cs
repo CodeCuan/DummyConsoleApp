@@ -16,18 +16,19 @@ namespace DummyConsoleApp.Misc
                 return;
             Init();
         }
+
         public void Init()
         {
             try
             {
                 BuildDeck();
-
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error, failed to build deck: " + ex.Message);
             }
         }
+
         public void BuildDeck()
         {
             cards = new List<Card>();
@@ -39,10 +40,12 @@ namespace DummyConsoleApp.Misc
                 }
             }
         }
+
         public void ShuffleDeck()
         {
             cards.Shuffle();
         }
+
         public Card Deal()
         {
             if (cards.Count == 0)
@@ -51,6 +54,7 @@ namespace DummyConsoleApp.Misc
             cards.RemoveAt(0);
             return returnCard;
         }
+
         public IEnumerable<Card> Deal(int cardsCount)
         {
             for (int i = 0; i < cardsCount; i++)
@@ -58,12 +62,14 @@ namespace DummyConsoleApp.Misc
                 yield return Deal();
             }
         }
+
         public class Card
         {
             public override string ToString()
             {
                 return $"{suit.ToString().First()}{GetName()}";
             }
+
             private string GetName()
             {
                 switch (royal)
@@ -76,6 +82,7 @@ namespace DummyConsoleApp.Misc
                         return royal.ToString().First().ToString();
                 }
             }
+
             public Card(Suit suit, int number)
             {
                 this.suit = suit;
@@ -97,12 +104,27 @@ namespace DummyConsoleApp.Misc
                         break;
                 }
             }
+
             public Suit suit;
             public RoyalCard royal = RoyalCard.None;
             public int number;
             public bool isAce = false;
         }
-        public enum RoyalCard { None, King, Queen, Jack }
-        public enum Suit { Hearts, Diamonds, Clubs, Spades }
+
+        public enum RoyalCard
+        {
+            None,
+            King,
+            Queen,
+            Jack,
+        }
+
+        public enum Suit
+        {
+            Hearts,
+            Diamonds,
+            Clubs,
+            Spades,
+        }
     }
 }

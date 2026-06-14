@@ -13,12 +13,12 @@ public class Day12JsonDataTests
     [InlineData(@"[[[3]]]", 3)]
     [InlineData(@"[]", 0)]
     [InlineData(@"{""a"":{""b"":4},""c"":-1}", 3)]
-    [InlineData(@"{""a"":[-1,1]}",0)]
-    [InlineData(@"[-1,{""a"":1}]",0)]
+    [InlineData(@"{""a"":[-1,1]}", 0)]
+    [InlineData(@"[-1,{""a"":1}]", 0)]
     public void CountNumbers_CountsCorrectly(string json, int expected)
     {
         var jToken = JToken.Parse(json);
-        var result = sut.CountNumbersInNode(jToken);
+        var result = sut.CountNumbersInNode(jToken, false);
         Assert.Equal(expected, result);
     }
 }

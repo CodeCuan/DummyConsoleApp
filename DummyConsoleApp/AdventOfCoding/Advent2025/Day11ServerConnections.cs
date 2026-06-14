@@ -1,6 +1,6 @@
-﻿using DummyConsoleApp.AdventOfCoding.Data;
+﻿using System.Diagnostics;
+using DummyConsoleApp.AdventOfCoding.Data;
 using DummyConsoleApp.AdventOfCoding.Utilities;
-using System.Diagnostics;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025;
 
@@ -15,7 +15,9 @@ public class Day11ServerConnections
         stoppy = Stopwatch.StartNew();
         paths = GetPathsDacFft(AdventData2025.Day11ServerConnections);
         stoppy.Stop();
-        Console.WriteLine($"Paths from svr to out with dac/fft: {paths} . Took {stoppy.ElapsedMilliseconds} ms");
+        Console.WriteLine(
+            $"Paths from svr to out with dac/fft: {paths} . Took {stoppy.ElapsedMilliseconds} ms"
+        );
     }
 
     public long GetPaths(string input)
@@ -28,19 +30,17 @@ public class Day11ServerConnections
     {
         var rack = new ServerRack(input);
         return rack.GetPathsToEndDacFft();
-
     }
 
     private class ServerRack
     {
         Dictionary<string, ServerSlot> slots = [];
+
         public ServerRack(string input)
         {
             var lines = DataParser.SplitLines(input);
             lines.Add("out:");
-            slots = lines
-                .Select(line => new ServerSlot(line))
-                .ToDictionary(ss => ss.key, ss => ss);
+            slots = lines.Select(line => new ServerSlot(line)).ToDictionary(ss => ss.key, ss => ss);
             foreach (var slot in slots)
             {
                 slot.Value.LinkChildren(slots);
@@ -59,8 +59,7 @@ public class Day11ServerConnections
             var dacToEnd = GetPathsToDestination(dacSlot, "out", []);
             var fftToEnd = GetPathsToDestination(fftSlot, "out", []);
 
-            var totalPaths = toDac * dacToFft * fftToEnd
-                + toFft * fftToDac * dacToEnd;
+            var totalPaths = toDac * dacToFft * fftToEnd + toFft * fftToDac * dacToEnd;
             return totalPaths;
         }
 
@@ -74,7 +73,8 @@ public class Day11ServerConnections
         public long GetPathsToDestination(
             ServerSlot slot,
             string destination,
-            Dictionary<string, long> pathsCache)
+            Dictionary<string, long> pathsCache
+        )
         {
             long paths = 0;
             foreach (var child in slot.children)
@@ -96,17 +96,19 @@ public class Day11ServerConnections
             pathsCache[slot.key] = paths;
             return paths;
         }
-
     }
+
     private class ServerSlot
     {
         public string key;
         public List<string> childrenKeys;
         public List<ServerSlot> children = [];
+
         public override string ToString()
         {
             return $"{key}: {string.Join(", ", childrenKeys)}";
         }
+
         public ServerSlot(string input)
         {
             var sections = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);

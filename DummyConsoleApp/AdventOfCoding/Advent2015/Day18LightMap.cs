@@ -1,7 +1,7 @@
-﻿using DummyConsoleApp.AdventOfCoding.Data;
+﻿using System.ComponentModel.Design;
+using DummyConsoleApp.AdventOfCoding.Data;
 using DummyConsoleApp.AdventOfCoding.Utilities;
 using DummyConsoleApp.AdventOfCoding.Utilities.DataStructures;
-using System.ComponentModel.Design;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2015;
 
@@ -10,13 +10,15 @@ public class Day18LightMap
     public void Main()
     {
         log = true;
-        Console.WriteLine($"Sample has {CountLights(@".#.#.#
+        Console.WriteLine(
+            $"Sample has {CountLights(@".#.#.#
 ...##.
 #....#
 ..#...
 #.#..#
 ####..
-", 5, true)}");
+", 5, true)}"
+        );
         log = false;
         Console.WriteLine("Day 18 Light Map");
         var lightCount = CountLights(AdventData2015.Day18LightMap);
@@ -24,8 +26,8 @@ public class Day18LightMap
 
         var lightCountXCorners = CountLights(AdventData2015.Day18LightMap, forceCorners: true);
         Console.WriteLine($"After cycles sans corners there are {lightCountXCorners} lights on");
-
     }
+
     private bool log = false;
 
     public int CountLights(string input, int cycleCount = 100, bool forceCorners = false)
@@ -55,7 +57,6 @@ public class Day18LightMap
             Console.WriteLine();
         }
         Console.WriteLine();
-
     }
 
     private void CycleMap(bool forceCorners)
@@ -63,16 +64,14 @@ public class Day18LightMap
         var lightMap = new DefaultDictionary<Coordinate2D.CoordinateKey, bool>();
         foreach (var light in LightMap.ToList())
         {
-            if(forceCorners
-                && corners.Contains(light.Key))
+            if (forceCorners && corners.Contains(light.Key))
             {
                 lightMap[light.Key] = true;
                 continue;
             }
 
             var neighbours = CountNeighbours(light.Key);
-            if (light.Value && neighbours == 2
-                || neighbours == 3)
+            if (light.Value && neighbours == 2 || neighbours == 3)
             {
                 lightMap[light.Key] = true;
             }
@@ -117,16 +116,16 @@ public class Day18LightMap
                 LightMap[new Coordinate2D.CoordinateKey(x, y)] = (lightChar == '#');
                 x++;
             }
-            maxX = x-1;
+            maxX = x - 1;
             y++;
         }
-        maxY = y-1;
+        maxY = y - 1;
         corners.Add(new(0, 0));
         corners.Add(new(0, maxY));
         corners.Add(new(maxX, 0));
         corners.Add(new(maxX, maxY));
-        if(setCorners)
-            foreach(var corner in corners)
+        if (setCorners)
+            foreach (var corner in corners)
                 LightMap[corner] = true;
     }
 

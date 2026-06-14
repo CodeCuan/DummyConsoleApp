@@ -1,8 +1,8 @@
-﻿using DummyConsoleApp.AdventOfCoding.Data;
+﻿using System.Diagnostics;
+using DummyConsoleApp.AdventOfCoding.Data;
 using DummyConsoleApp.AdventOfCoding.Utilities;
 using DummyConsoleApp.AdventOfCoding.Utilities.DataStructures;
 using DummyConsoleApp.AdventOfCoding.Utilities.Extensions;
-using System.Diagnostics;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2015;
 
@@ -10,34 +10,46 @@ public class Day13SeatingArrangement
 {
     public void Main()
     {
-        var optimalHappinessWithMe2 = GetOptimalHappiness(AdventData2015.Day13SeatingArrangements, true);
+        var optimalHappinessWithMe2 = GetOptimalHappiness(
+            AdventData2015.Day13SeatingArrangements,
+            true
+        );
 
         Console.WriteLine("Day 13: Seating Arrangement");
         var stoppy = Stopwatch.StartNew();
         var optimalHappiness = GetOptimalHappiness(AdventData2015.Day13SeatingArrangements, false);
         stoppy.Stop();
-        Console.WriteLine($"Optimal happiness: {optimalHappiness} . Worked out in {stoppy.ElapsedMilliseconds} ms");
+        Console.WriteLine(
+            $"Optimal happiness: {optimalHappiness} . Worked out in {stoppy.ElapsedMilliseconds} ms"
+        );
         stoppy.Restart();
-        var optimalHappinessWithMe = GetOptimalHappiness(AdventData2015.Day13SeatingArrangements, true);
+        var optimalHappinessWithMe = GetOptimalHappiness(
+            AdventData2015.Day13SeatingArrangements,
+            true
+        );
         stoppy.Stop();
-        Console.WriteLine($"Optimal happiness with me: {optimalHappinessWithMe} . Worked out in {stoppy.ElapsedMilliseconds} ms");
+        Console.WriteLine(
+            $"Optimal happiness with me: {optimalHappinessWithMe} . Worked out in {stoppy.ElapsedMilliseconds} ms"
+        );
     }
 
     public int GetOptimalHappiness(string data, bool addMe)
     {
         var peopleData = InitData(data);
-        if(addMe)
+        if (addMe)
             peopleData["Me"] = new SeatPerson("Me");
 
         var peopleChains = peopleData.Values.GetChains().ToList();
-        var bestChain =  peopleChains.MaxBy(EvaluateChain)
+        var bestChain =
+            peopleChains.MaxBy(EvaluateChain)
             ?? throw new InvalidOperationException("No seating chains found");
         return EvaluateChain(bestChain);
     }
 
-    private int EvaluateChain(List<SeatPerson> chain) { 
+    private int EvaluateChain(List<SeatPerson> chain)
+    {
         int totalHappiness = 0;
-        for (int i = 0; i < chain.Count-1; i++)
+        for (int i = 0; i < chain.Count - 1; i++)
         {
             var person = chain[i];
             var neighBour = chain[i + 1];
@@ -50,7 +62,8 @@ public class Day13SeatingArrangement
         return totalHappiness;
     }
 
-    private Dictionary<string, SeatPerson> InitData(string input ) {
+    private Dictionary<string, SeatPerson> InitData(string input)
+    {
         Dictionary<string, SeatPerson> people = [];
         var lines = DataParser.SplitLines(input);
         foreach (var line in lines)
@@ -83,13 +96,17 @@ public class Day13SeatingArrangement
         return people;
     }
 
-    public class SeatPerson {
+    public class SeatPerson
+    {
         public string name;
         public DefaultDictionary<SeatPerson, int> happinessChanges = [];
         public DefaultDictionary<SeatPerson, int> offsetHappinessChanges = [];
-        public SeatPerson(string name) { 
+
+        public SeatPerson(string name)
+        {
             this.name = name;
         }
+
         public override string ToString()
         {
             return name;

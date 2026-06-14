@@ -1,8 +1,8 @@
-﻿using DummyConsoleApp.AdventOfCoding.Data;
+﻿using System.Diagnostics;
+using DummyConsoleApp.AdventOfCoding.Data;
 using DummyConsoleApp.AdventOfCoding.Utilities;
 using DummyConsoleApp.AdventOfCoding.Utilities.Extensions;
 using Google.OrTools.LinearSolver;
-using System.Diagnostics;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025;
 
@@ -13,11 +13,15 @@ public class Day10SwitchLights
         var stoppy = Stopwatch.StartNew();
         var totalSum = GetTotalSwitchCountForLines(AdventData2025.Day10SwitchDiagrams);
         stoppy.Stop();
-        Console.WriteLine($"Total count is {totalSum}, took {stoppy.ElapsedMilliseconds} ms to calculate");
+        Console.WriteLine(
+            $"Total count is {totalSum}, took {stoppy.ElapsedMilliseconds} ms to calculate"
+        );
         stoppy = Stopwatch.StartNew();
         totalSum = GetTotalSwitchCountForLines(AdventData2025.Day10SwitchDiagrams, true);
         stoppy.Stop();
-        Console.WriteLine($"Total voltage count is {totalSum}, took {stoppy.ElapsedMilliseconds} ms to calculate");
+        Console.WriteLine(
+            $"Total voltage count is {totalSum}, took {stoppy.ElapsedMilliseconds} ms to calculate"
+        );
     }
 
     public int GetTotalSwitchCountForLines(string line, bool checkVoltage = false)
@@ -107,15 +111,15 @@ public class Day10SwitchLights
                     expr += bVar;
                 var constraint = expr == expectedJoltage;
                 solver.Add(constraint);
-
             }
             var resultStatus = solver.Solve();
             var totalSum = (int)buttonVariables.Sum(bVar => bVar.SolutionValue());
-            Console.WriteLine($"solution = {totalSum}: {string.Join(", ", buttonVariables.Select(bv =>
+            Console.WriteLine(
+                $"solution = {totalSum}: {string.Join(", ", buttonVariables.Select(bv =>
                 $"{bv.Name()}={bv.SolutionValue()}"
-            ))}");
+            ))}"
+            );
             return totalSum;
-
         }
 
         public LightConfig(string input)
@@ -128,12 +132,11 @@ public class Day10SwitchLights
             foreach (var buttonSet in sections[1].Split(' ', StringSplitOptions.RemoveEmptyEntries))
             {
                 var buttonNumbers = buttonSet.Trim('(').Trim(')');
-                ButtonSets.Add(
-                    buttonNumbers.Split(',').Select(int.Parse).ToList()
-                    );
+                ButtonSets.Add(buttonNumbers.Split(',').Select(int.Parse).ToList());
             }
             JoltageRequirements = sections[2].Split(',').Select(int.Parse).ToList();
         }
+
         public List<bool> ExpectedStates = [];
         public List<List<int>> ButtonSets = [];
         public List<int> JoltageRequirements = [];

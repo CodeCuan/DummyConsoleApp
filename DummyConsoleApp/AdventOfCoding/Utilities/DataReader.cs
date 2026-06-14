@@ -1,11 +1,12 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Text.Json.Nodes;
+﻿using System.Text.Json.Nodes;
+using Newtonsoft.Json.Linq;
 
 namespace DummyConsoleApp.AdventOfCoding.Utilities;
 
 public static class DataReader
 {
     private const string DataFileDirectory = "AdventOfCoding\\Data";
+
     public static string[] ReadLines(string file, int year)
     {
         var filePath = GetFilePath(file, year);
@@ -35,6 +36,11 @@ public static class DataReader
 
     private static string GetFilePath(string file, int year)
     {
-        return Path.Combine(AppContext.BaseDirectory, DataFileDirectory, $"AdventData{year}Files", file);
+        return Path.Combine(
+            AppContext.BaseDirectory,
+            DataFileDirectory,
+            $"AdventData{year}Files",
+            file
+        );
     }
 }

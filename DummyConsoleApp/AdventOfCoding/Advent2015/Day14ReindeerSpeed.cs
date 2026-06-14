@@ -1,17 +1,21 @@
-﻿using DummyConsoleApp.AdventOfCoding.Data;
+﻿using System.Diagnostics;
+using DummyConsoleApp.AdventOfCoding.Data;
 using DummyConsoleApp.AdventOfCoding.Utilities;
 using DummyConsoleApp.AdventOfCoding.Utilities.DataStructures;
-using System.Diagnostics;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2015;
+
 public class Day14ReindeerSpeed
 {
-    public void Main() {
+    public void Main()
+    {
         Console.WriteLine("Day 14: Reindeer Speed");
         var stoppy = Stopwatch.StartNew();
         var maxDistance = GetMaxTravel(2503, AdventData2015.Day14Speeds);
         stoppy.Stop();
-        Console.WriteLine($"Max distance travelled: {maxDistance} . time taken {stoppy.ElapsedMilliseconds} ms");
+        Console.WriteLine(
+            $"Max distance travelled: {maxDistance} . time taken {stoppy.ElapsedMilliseconds} ms"
+        );
         stoppy.Restart();
         var maxPoints = GetMaxPoints(2503, AdventData2015.Day14Speeds);
         stoppy.Stop();
@@ -24,8 +28,11 @@ public class Day14ReindeerSpeed
         var inputLines = DataParser.SplitLines(input);
         for (int currentTime = 1; currentTime <= totalTTime; currentTime++)
         {
-            var winningReindeers = inputLines.GroupBy(line => GetDistanceTravelled(currentTime, line));
-            foreach (var reinDeer in winningReindeers.MaxBy(g => g.Key)!) {
+            var winningReindeers = inputLines.GroupBy(line =>
+                GetDistanceTravelled(currentTime, line)
+            );
+            foreach (var reinDeer in winningReindeers.MaxBy(g => g.Key)!)
+            {
                 points[reinDeer]++;
             }
         }
@@ -34,7 +41,9 @@ public class Day14ReindeerSpeed
 
     public int GetMaxTravel(int totalTTime, string input)
     {
-        var maxDistance = DataParser.SplitLines(input).Max(line => GetDistanceTravelled(totalTTime, line));
+        var maxDistance = DataParser
+            .SplitLines(input)
+            .Max(line => GetDistanceTravelled(totalTTime, line));
 
         return maxDistance;
     }
@@ -49,7 +58,8 @@ public class Day14ReindeerSpeed
         return speed * travelTime;
     }
 
-    public int GetTravelTime(int totalTTime, int flyTime, int restTime) { 
+    public int GetTravelTime(int totalTTime, int flyTime, int restTime)
+    {
         var fullCycles = totalTTime / (flyTime + restTime);
         var extraTime = Math.Min(flyTime, totalTTime % (flyTime + restTime));
         return fullCycles * flyTime + extraTime;

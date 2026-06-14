@@ -12,12 +12,14 @@ public class Advent2024Solution1
     public AdventDataSet adventData;
     public List<int> list1;
     public List<int> list2;
+
     public Advent2024Solution1()
     {
         adventData = GetAdventData();
         list1 = adventData.list1;
         list2 = adventData.list2;
     }
+
     public void ChallengeOneDistance()
     {
         list1.Sort();
@@ -32,9 +34,7 @@ public class Advent2024Solution1
 
     public void GetSimilarityScore()
     {
-
-        var frequency = list2.GroupBy(x => x)
-                         .ToDictionary(g => g.Key, g => g.Count());
+        var frequency = list2.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
         var score = list1.Sum(x => frequency.ContainsKey(x) ? x * frequency[x] : 0);
         Console.WriteLine(score);
     }
@@ -43,7 +43,9 @@ public class Advent2024Solution1
     {
         var input = AdventData2024.PuzzleOneCoordinates;
         AdventDataSet dataSet = new AdventDataSet();
-        foreach (var entry in input.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
+        foreach (
+            var entry in input.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+        )
         {
             var parts = entry.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
             dataSet.list1.Add(int.Parse(parts[0]));
@@ -57,5 +59,4 @@ public class AdventDataSet()
 {
     public List<int> list1 = new List<int>();
     public List<int> list2 = new List<int>();
-
 }

@@ -1,9 +1,9 @@
-﻿using DummyConsoleApp.AdventOfCoding.Advent2024;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DummyConsoleApp.AdventOfCoding.Advent2024;
 
 namespace DummyConsoleApp.Test.Aoc2024;
 
@@ -12,7 +12,8 @@ public class Advent2024Solution4Tests
     public Advent2024Solution4 sut = new Advent2024Solution4();
 
     [Theory]
-    [InlineData(@"MMMSXXMASM
+    [InlineData(
+        @"MMMSXXMASM
 MSAMXMSMSA
 AMXSXMAAMM
 MSAMASMSMX
@@ -21,7 +22,9 @@ XXAMMXXAMA
 SMSMSASXSS
 SAXAMASAAA
 MAMMMXMMMM
-MXMXAXMASX", 18)]
+MXMXAXMASX",
+        18
+    )]
     public void Solve2_ReturnsExpectedResult(string input, int expected)
     {
         var result = sut.Search(input);

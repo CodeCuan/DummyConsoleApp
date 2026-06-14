@@ -1,4 +1,4 @@
 using DummyConsoleApp.AdventOfCoding.Advent2015;
 
-Day24BoxWeights solution = new();
+Day25WeatherMachine solution = new();
 solution.Main();

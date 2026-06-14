@@ -1,77 +1,95 @@
-﻿using DummyConsoleApp.AdventOfCoding.Data;
+﻿using System.Diagnostics;
+using Combinatorics.Collections;
+using DummyConsoleApp.AdventOfCoding.Data;
 using DummyConsoleApp.AdventOfCoding.Utilities;
-using DummyConsoleApp.AdventOfCoding.Utilities.Extensions;
-using System.Diagnostics;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2015;
 
 public class Day24BoxWeights
 {
+    private const string Sample =
+        @"1
+2
+3
+4
+5
+7
+8
+9
+10
+11";
+
     public void Main()
     {
         Console.WriteLine("Day 24 Box Weights");
         var stoppy = Stopwatch.StartNew();
         var minEntanglement = GetMinEntanglement(AdventData2015.Day24BoxWeights);
         stoppy.Stop();
-        Console.WriteLine($"Minimum entanglement for 3 groups: {minEntanglement} (calculated in {stoppy.ElapsedMilliseconds} ms)");
+        Console.WriteLine(
+            $"Minimum entanglement for 3 groups: {minEntanglement} (calculated in {stoppy.ElapsedMilliseconds} ms)"
+        );
+        stoppy.Restart();
+        var minEntanglement4 = GetMinEntanglement(AdventData2015.Day24BoxWeights, 4);
+        stoppy.Stop();
+        Console.WriteLine(
+            $"Minimum entanglement for 4 groups: {minEntanglement4} (calculated in {stoppy.ElapsedMilliseconds} ms)"
+        );
     }
 
-    public int GetMinEntanglement(string input) { 
+    public long GetMinEntanglement(string input, int boxCount = 3)
+    {
         var boxes = DataParser.SplitDataLineToLong(input).OrderDescending().ToList();
-        var boxSets = GetAllValidCombinations(boxes).ToList();
-        return 0;
+        var boxSets = GetAllValidCombinations(boxes, boxCount).ToList();
+        var bestBoxSet =
+            boxSets.MinBy(GetEntanglement) ?? throw new Exception("No valid box set found");
+        return GetEntanglement(bestBoxSet);
     }
 
-    private IEnumerable<List<long>> GetAllValidCombinations(List<long> items) {
+    private long GetEntanglement(List<long> items)
+    {
+        return items.Aggregate(1L, (acc, val) => acc * val);
+    }
+
+    private IEnumerable<List<long>> GetAllValidCombinations(List<long> items, int boxCount)
+    {
         var totalWeight = items.Sum();
-        if (totalWeight % 3 != 0)
+        if (totalWeight % boxCount != 0)
             throw new Exception($"Total input {totalWeight} invalid");
-        var targetWeight = totalWeight / 3;
-        var minBoxes = GetMinBoxes(items, targetWeight);
-        var possibleCombinations = GetAllPossibleCombinations(items, targetWeight, minBoxes).ToList();
-        while (possibleCombinations.Any())
-        { 
-            var checkCombination = possibleCombinations.First();
-            possibleCombinations.RemoveAt(0);
-            var matchItems = possibleCombinations.Where(pc => !pc.Intersect(checkCombination).Any()).ToList();
-            if (matchItems.Count > 0)
+        var targetWeight = totalWeight / boxCount;
+
+        var minCount = GetMinCount(items, targetWeight);
+
+        for (int count = minCount; count <= items.Count; count++)
+        {
+            bool matchFound = false;
+            var combinations = new Combinations<long>(items, count);
+
+            foreach (var combination in combinations)
             {
-                yield return checkCombination;
-                foreach (var matchItem in matchItems)
+                if (combination.Sum() == targetWeight)
                 {
-                    yield return matchItem;
-                    possibleCombinations.Remove(matchItem);
+                    yield return combination.ToList();
+                    matchFound = true;
                 }
             }
+            if (matchFound)
+            {
+                yield break;
+            }
         }
-
     }
 
-    private int GetMinBoxes(List<long> items, long targetWeight)
+    private int GetMinCount(List<long> baseList, long targetWeight)
     {
         long total = 0;
         var counter = 0;
-        foreach (var item in items) {
+        foreach (var item in baseList)
+        {
             counter++;
             total += item;
             if (total >= targetWeight)
                 return counter;
         }
-        return items.Count;
-    }
-
-    private IEnumerable<List<long>> GetAllPossibleCombinations(List<long> items, long target, int minCount = 1) {
-        bool foundMatch = false;
-        for (int i = minCount; i <= items.Count; i++) {
-            foreach (var combination in items.GetCombinations(i)) {
-                if (combination.Sum() == target)
-                {
-                    yield return combination;
-                    foundMatch = true;
-                }
-            }
-            if (foundMatch)
-                yield break;
-        }
+        return baseList.Count;
     }
 }

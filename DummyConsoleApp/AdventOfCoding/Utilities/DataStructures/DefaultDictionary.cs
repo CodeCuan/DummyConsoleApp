@@ -1,7 +1,6 @@
 ﻿namespace DummyConsoleApp.AdventOfCoding.Utilities.DataStructures;
 
-public class DefaultDictionary<TKey, TValue>
-    : Dictionary<TKey, TValue>
+public class DefaultDictionary<TKey, TValue> : Dictionary<TKey, TValue>
     where TValue : new()
     where TKey : notnull
 {
@@ -19,9 +18,6 @@ public class DefaultDictionary<TKey, TValue>
             }
             return val;
         }
-        set
-        {
-            base[key] = value;
-        }
+        set { base[key] = value; }
     }
 }

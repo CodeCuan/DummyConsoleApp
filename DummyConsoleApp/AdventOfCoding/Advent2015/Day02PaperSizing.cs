@@ -19,11 +19,9 @@ public class Day02PaperSizing
 
     IList<Coordinate3D> points = [];
 
-    public void InitPoints(string input) {
-        points = DataParser
-            .SplitLines(input)
-            .Select(line => new Coordinate3D(line, 'x'))
-            .ToList();
+    public void InitPoints(string input)
+    {
+        points = DataParser.SplitLines(input).Select(line => new Coordinate3D(line, 'x')).ToList();
     }
 
     public long GetSurfaceArea()
@@ -38,11 +36,7 @@ public class Day02PaperSizing
 
     public long GetWrappingForShape(Coordinate3D shape)
     {
-        IList<long> sideAreas = [
-            shape.X * shape.Y,
-            shape.Y * shape.Z,
-            shape.Z * shape.X
-            ];
+        IList<long> sideAreas = [shape.X * shape.Y, shape.Y * shape.Z, shape.Z * shape.X];
         var totalArea = 2 * sideAreas.Sum();
         var extraArea = sideAreas.Min();
         return totalArea + extraArea;
@@ -50,11 +44,7 @@ public class Day02PaperSizing
 
     public long GetRibbonForShape(Coordinate3D shape)
     {
-        IList<long> sideAreas = [
-            shape.X + shape.Y,
-            shape.Y + shape.Z,
-            shape.Z + shape.X
-            ];
+        IList<long> sideAreas = [shape.X + shape.Y, shape.Y + shape.Z, shape.Z + shape.X];
         return 2 * sideAreas.Min() + shape.GetVolume();
     }
 }

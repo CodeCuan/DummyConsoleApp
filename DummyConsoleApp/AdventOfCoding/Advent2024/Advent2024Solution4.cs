@@ -1,6 +1,6 @@
-﻿using DummyConsoleApp.AdventOfCoding.Data;
+﻿using System.Text.RegularExpressions;
+using DummyConsoleApp.AdventOfCoding.Data;
 using DummyConsoleApp.AdventOfCoding.Utilities;
-using System.Text.RegularExpressions;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2024;
 
@@ -97,8 +97,6 @@ public class Advent2024Solution4
                 yield return new string(accumulator.ToArray());
             }
         }
-
-
     }
 
     public void LogBreakDown(string input)

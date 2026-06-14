@@ -1,9 +1,9 @@
-﻿using DummyConsoleApp.AdventOfCoding.Advent2024;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DummyConsoleApp.AdventOfCoding.Advent2024;
 
 namespace DummyConsoleApp.Test.Aoc2024;
 

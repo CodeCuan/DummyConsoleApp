@@ -14,7 +14,6 @@ public class Day12PuzzleForms
         Console.WriteLine($"Valid Sample Regions: {sample}");
         var actual = CountRegions(AdventData2025.Day12PuzzleData);
         Console.WriteLine($"Valid actual Regions: {actual}");
-
     }
 
     public int CountRegions(string input)
@@ -22,13 +21,15 @@ public class Day12PuzzleForms
         List<PuzzleShape> puzzleShapes = [];
         var data = DataParser.SplitLines(input);
         var treeRegions = data.Skip(shapes * 4).Select(line => new PuzzleRegion(line)).ToList();
-        for (int shapeCount = 0; shapeCount < shapes; shapeCount++) {
+        for (int shapeCount = 0; shapeCount < shapes; shapeCount++)
+        {
             puzzleShapes.Add(new PuzzleShape(data.Skip(4 * shapeCount + 1).Take(3)));
         }
 
         int validRegions = 0;
-        foreach (var region in treeRegions) {
-            if(region.IsValid(puzzleShapes))
+        foreach (var region in treeRegions)
+        {
+            if (region.IsValid(puzzleShapes))
             {
                 validRegions++;
             }
@@ -37,11 +38,14 @@ public class Day12PuzzleForms
         return validRegions;
     }
 
-    public class PuzzleShape {
+    public class PuzzleShape
+    {
         public int populatedCount = 0;
         public int gapCount = 0;
         public List<string> puzzleShape = [];
-        public PuzzleShape(IEnumerable<string> inputs) {
+
+        public PuzzleShape(IEnumerable<string> inputs)
+        {
             foreach (var input in inputs)
             {
                 populatedCount += input.Count(c => c == '#');
@@ -49,19 +53,24 @@ public class Day12PuzzleForms
                 puzzleShape.Add(input);
             }
         }
+
         public override string ToString()
         {
             return string.Join("|", puzzleShape);
         }
-
     }
 
-    public class PuzzleRegion {
+    public class PuzzleRegion
+    {
         public int x;
         public int y;
         public List<int> puzzleRequirements = [];
-        public PuzzleRegion(string input) {
-            var sections = input.Split([' ', ':', 'x'], StringSplitOptions.RemoveEmptyEntries).ToList();
+
+        public PuzzleRegion(string input)
+        {
+            var sections = input
+                .Split([' ', ':', 'x'], StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
             x = int.Parse(sections[0]);
             y = int.Parse(sections[1]);
             puzzleRequirements = sections.Skip(2).Select(int.Parse).ToList();
@@ -76,7 +85,7 @@ public class Day12PuzzleForms
             if (puzzleRequirements.Sum() < easyCount)
                 return true;
             int totalReqs = 0;
-            for(int pi = 0; pi < puzzleRequirements.Count; pi++)
+            for (int pi = 0; pi < puzzleRequirements.Count; pi++)
             {
                 var shape = puzzleShapes[pi];
                 var required = puzzleRequirements[pi];

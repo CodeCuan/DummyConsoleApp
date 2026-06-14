@@ -10,7 +10,10 @@ public class Coordinate2D
     public long X { get; set; }
     public long Y { get; set; }
 
-    public CoordinateKey Key { get { return new(X, Y); } }
+    public CoordinateKey Key
+    {
+        get { return new(X, Y); }
+    }
 
     public Coordinate2D(long x, long y)
     {
@@ -27,10 +30,7 @@ public class Coordinate2D
 
     public Coordinate2D GetAbsoluteDistance(Coordinate2D toPoint)
     {
-        return new Coordinate2D(
-            Math.Abs(toPoint.X - X),
-            Math.Abs(toPoint.Y - Y)
-        );
+        return new Coordinate2D(Math.Abs(toPoint.X - X), Math.Abs(toPoint.Y - Y));
     }
 
     public double GetDistanceSquared(Coordinate2D toPoint)
@@ -58,6 +58,7 @@ public class Coordinate2D
         {
             return $"{X},{Y}";
         }
+
         public override bool Equals(object? obj)
         {
             return obj is CoordinateKey other && Equals(other)
@@ -74,7 +75,10 @@ public class Coordinate2D
             return HashCode.Combine(X, Y);
         }
 
-        public static bool operator ==(CoordinateKey left, CoordinateKey right) => left.Equals(right);
-        public static bool operator !=(CoordinateKey left, CoordinateKey right) => !left.Equals(right);
+        public static bool operator ==(CoordinateKey left, CoordinateKey right) =>
+            left.Equals(right);
+
+        public static bool operator !=(CoordinateKey left, CoordinateKey right) =>
+            !left.Equals(right);
     }
 }

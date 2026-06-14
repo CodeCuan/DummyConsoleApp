@@ -31,7 +31,8 @@ public class Coordinate3D
         return point.X <= X && point.Y <= Y && point.Z <= Z;
     }
 
-    public Coordinate3D GetAbsoluteDistance(Coordinate3D toPoint) { 
+    public Coordinate3D GetAbsoluteDistance(Coordinate3D toPoint)
+    {
         return new Coordinate3D(
             Math.Abs(toPoint.X - X),
             Math.Abs(toPoint.Y - Y),

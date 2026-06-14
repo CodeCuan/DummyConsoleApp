@@ -1,8 +1,8 @@
-﻿using DummyConsoleApp.AdventOfCoding.Data;
+﻿using System.Collections;
+using System.Diagnostics;
+using DummyConsoleApp.AdventOfCoding.Data;
 using DummyConsoleApp.AdventOfCoding.Utilities;
 using DummyConsoleApp.AdventOfCoding.Utilities.Extensions;
-using System.Collections;
-using System.Diagnostics;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2015;
 
@@ -20,12 +20,12 @@ public class Day07Circuitry
         signal = GetSignalDoubleParse(AdventData2015.Day7Circuitry);
         stoppy.Stop();
         Console.WriteLine($"New signal on wire a: {signal} . Took {stoppy.ElapsedMilliseconds} ms");
-
     }
 
     public void LogSignal(string input)
     {
-        var wires = DataParser.SplitLines(input)
+        var wires = DataParser
+            .SplitLines(input)
             .Select(line => new Wire(line))
             .ToDictionary(wire => wire.key, wire => wire);
         foreach (var wireKey in wires.Keys.Order())
@@ -37,12 +37,14 @@ public class Day07Circuitry
 
     public int GetSignalDoubleParse(string input)
     {
-        var wires = DataParser.SplitLines(input)
+        var wires = DataParser
+            .SplitLines(input)
             .Select(line => new Wire(line))
             .ToDictionary(wire => wire.key, wire => wire);
         var bitValue = wires["a"].GetSignalValue(wires);
-        foreach (var wireSet in wires) { 
-            if(wireSet.Key == "b")
+        foreach (var wireSet in wires)
+        {
+            if (wireSet.Key == "b")
                 wireSet.Value.SignalBits = new BitArray(bitValue);
             else
                 wireSet.Value.SignalBits = null;
@@ -53,7 +55,8 @@ public class Day07Circuitry
 
     public int GetSignal(string input)
     {
-        var wires = DataParser.SplitLines(input)
+        var wires = DataParser
+            .SplitLines(input)
             .Select(line => new Wire(line))
             .ToDictionary(wire => wire.key, wire => wire);
         var bitValue = wires["a"].GetSignalValue(wires);
@@ -67,13 +70,16 @@ public class Day07Circuitry
         public List<string> arguments = [];
         public List<BitArray> processedArguments = [];
         public WireOperator wireOperator = WireOperator.None;
+
         public Wire(string line)
         {
-            var parts = line.Split("->",
-                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            var parts = line.Split(
+                "->",
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
+            );
             key = parts[1];
-            var instructionSet = parts[0].Split(' ',
-                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            var instructionSet = parts[0]
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
             switch (instructionSet.Length)
             {
@@ -108,14 +114,11 @@ public class Day07Circuitry
         {
             SignalBits ??= CalculateSignalValue(wires);
             return SignalBits;
-
         }
 
         public BitArray CalculateSignalValue(Dictionary<string, Wire> wires)
         {
-            processedArguments = arguments
-                .Select(arg => GetValue(arg, wires))
-                .ToList();
+            processedArguments = arguments.Select(arg => GetValue(arg, wires)).ToList();
             switch (wireOperator)
             {
                 case WireOperator.Not:
@@ -160,7 +163,7 @@ public class Day07Circuitry
             Or,
             RShift,
             LShift,
-            Not
+            Not,
         }
     }
 }

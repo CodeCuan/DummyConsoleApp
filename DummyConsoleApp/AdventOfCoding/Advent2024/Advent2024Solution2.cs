@@ -1,12 +1,12 @@
 ﻿using DummyConsoleApp.AdventOfCoding.Data;
 using DummyConsoleApp.AdventOfCoding.Utilities;
 
-
 namespace DummyConsoleApp.AdventOfCoding.Advent2024;
 
 public class Advent2024Solution2
 {
     public List<List<int>> data;
+
     public Advent2024Solution2()
     {
         data = DataParser.ParseDataIntoIntLists(AdventData2024.PuzzleTwoReportData);
@@ -27,7 +27,8 @@ public class Advent2024Solution2
     {
         if (report.Count < 2)
             return true;
-        if (report[1] == report[0]) return false;
+        if (report[1] == report[0])
+            return false;
 
         var isValid = IsAscendingReportBasic(report, report[1] > report[0]);
 
@@ -36,8 +37,7 @@ public class Advent2024Solution2
 
     public bool IsSafeReport(List<int> report)
     {
-        var isValid = IsAscendingReport(report, true)
-            || IsAscendingReport(report, false);
+        var isValid = IsAscendingReport(report, true) || IsAscendingReport(report, false);
 
         return isValid;
     }
@@ -67,7 +67,8 @@ public class Advent2024Solution2
             }
         }
 
-        return !usedSafety || ValidNumbers(report[report.Count - 1], report[report.Count - 2], ascending);
+        return !usedSafety
+            || ValidNumbers(report[report.Count - 1], report[report.Count - 2], ascending);
     }
 
     public bool IsAscendingReportBasic(List<int> report, bool ascending)
@@ -75,8 +76,7 @@ public class Advent2024Solution2
         int? prevNumber = null;
         foreach (var reportNum in report)
         {
-            if (prevNumber.HasValue
-                && !ValidNumbers(reportNum, prevNumber.Value, ascending))
+            if (prevNumber.HasValue && !ValidNumbers(reportNum, prevNumber.Value, ascending))
                 return false;
             prevNumber = reportNum;
         }
@@ -90,6 +90,4 @@ public class Advent2024Solution2
         else
             return previous - 3 <= current && current < previous;
     }
-
-
 }

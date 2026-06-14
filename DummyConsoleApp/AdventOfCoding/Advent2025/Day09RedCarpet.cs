@@ -1,8 +1,8 @@
-﻿using DummyConsoleApp.AdventOfCoding.Constants;
+﻿using System.Diagnostics;
+using DummyConsoleApp.AdventOfCoding.Constants;
 using DummyConsoleApp.AdventOfCoding.Data;
 using DummyConsoleApp.AdventOfCoding.Utilities;
 using DummyConsoleApp.AdventOfCoding.Utilities.DataStructures;
-using System.Diagnostics;
 using static DummyConsoleApp.AdventOfCoding.Utilities.DataStructures.Coordinate2D;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025;
@@ -15,9 +15,12 @@ public class Day09RedCarpet
         var stoppy = Stopwatch.StartNew();
         var largestRectangle = GetLargestRectangle(AdventData2025.Day9RedCarpets);
         stoppy.Stop();
-        Console.WriteLine($"The largest rectangle area is: {largestRectangle}. Solved in {stoppy.ElapsedMilliseconds} ms");
+        Console.WriteLine(
+            $"The largest rectangle area is: {largestRectangle}. Solved in {stoppy.ElapsedMilliseconds} ms"
+        );
         stoppy = Stopwatch.StartNew();
-        var largestFullRectangle = GetLargestFullRectangle(@"1,1
+        var largestFullRectangle = GetLargestFullRectangle(
+            @"1,1
 7,1
 11,1
 11,7
@@ -33,19 +36,22 @@ public class Day09RedCarpet
 22,20,
 20,22,
 24,20
-24,22");
+24,22"
+        );
         if (largestFullRectangle != 24 && false)
             throw new Exception("Largest rect was {largestFullRectangle}");
         largestFullRectangle = GetLargestFullRectangle(AdventData2025.Day9RedCarpets, false);
         stoppy.Stop();
-        Console.WriteLine($"The largest full rectangle area is: {largestFullRectangle}. Solved in {stoppy.ElapsedMilliseconds} ms");
-
+        Console.WriteLine(
+            $"The largest full rectangle area is: {largestFullRectangle}. Solved in {stoppy.ElapsedMilliseconds} ms"
+        );
     }
 
     public long GetLargestRectangle(string input)
     {
         var rectangles = GetRectangles(input);
-        var biggestRectangle = rectangles.MaxBy(rectangle => rectangle.Area)
+        var biggestRectangle =
+            rectangles.MaxBy(rectangle => rectangle.Area)
             ?? throw new Exception("There are no rectangles");
         return biggestRectangle.Area;
     }
@@ -59,8 +65,12 @@ public class Day09RedCarpet
         List<long> rectangleAreas = [];
         foreach (var chain in shapeChains)
         {
-            var validRectangles = rectangles.Where(rect => chain.coordinates.Contains(rect.Corner1.Key)
-                && chain.coordinates.Contains(rect.Corner2.Key)).ToList();
+            var validRectangles = rectangles
+                .Where(rect =>
+                    chain.coordinates.Contains(rect.Corner1.Key)
+                    && chain.coordinates.Contains(rect.Corner2.Key)
+                )
+                .ToList();
             Dictionary<Coordinate2D.CoordinateKey, CarpetCoordinate2D> coordinateMap = new();
             foreach (var rectangle in validRectangles)
                 rectangle.PaintCoordinates(coordinateMap);
@@ -106,24 +116,38 @@ public class Day09RedCarpet
             }
         }
     }
+
     public IEnumerable<RectangleChain> BreakChain(RectangleChain parentChain)
     {
         var startingEdge = parentChain.Rectangles.First();
-        foreach (var chain in ChaseChains(
-            parentChain,
-            startingEdge.Corner1.Key,
-            new OrderedDictionary<CoordinateKey, Rectangle2D>() { { startingEdge.Corner2.Key, startingEdge } },
-            [startingEdge.Corner1.Key, startingEdge.Corner2.Key]))
+        foreach (
+            var chain in ChaseChains(
+                parentChain,
+                startingEdge.Corner1.Key,
+                new OrderedDictionary<CoordinateKey, Rectangle2D>()
+                {
+                    { startingEdge.Corner2.Key, startingEdge },
+                },
+                [startingEdge.Corner1.Key, startingEdge.Corner2.Key]
+            )
+        )
         {
             yield return chain;
         }
     }
 
-    public IEnumerable<RectangleChain> ChaseChains(RectangleChain chain, CoordinateKey currentPoint, OrderedDictionary<CoordinateKey, Rectangle2D> path, HashSet<CoordinateKey> processedPoints)
+    public IEnumerable<RectangleChain> ChaseChains(
+        RectangleChain chain,
+        CoordinateKey currentPoint,
+        OrderedDictionary<CoordinateKey, Rectangle2D> path,
+        HashSet<CoordinateKey> processedPoints
+    )
     {
-        var nextEdges = chain.Rectangles.Where(rect => rect != path.Values.Last()
-                && (rect.Corner1.Key.Equals(currentPoint)
-                    || rect.Corner2.Key.Equals(currentPoint)))
+        var nextEdges = chain
+            .Rectangles.Where(rect =>
+                rect != path.Values.Last()
+                && (rect.Corner1.Key.Equals(currentPoint) || rect.Corner2.Key.Equals(currentPoint))
+            )
             .ToList();
         if (nextEdges.Count == 0)
             yield break;
@@ -137,8 +161,9 @@ public class Day09RedCarpet
                 var matchPoint = nextPoint.Key;
                 if (!path.ContainsKey(matchPoint))
                 {
-                    matchPoint = path.FirstOrDefault(
-                            pair => pair.Value.IsLineAndContainsPoint(nextPoint)).Key;
+                    matchPoint = path.FirstOrDefault(pair =>
+                        pair.Value.IsLineAndContainsPoint(nextPoint)
+                    ).Key;
                     if (matchPoint == default)
                         continue;
                 }
@@ -166,11 +191,28 @@ public class Day09RedCarpet
         }
     }
 
-    public IEnumerable<Rectangle2D> GetLeftFirst(Rectangle2D currentEdge, CoordinateKey leadingPoint, List<Rectangle2D> paths)
+    public IEnumerable<Rectangle2D> GetLeftFirst(
+        Rectangle2D currentEdge,
+        CoordinateKey leadingPoint,
+        List<Rectangle2D> paths
+    )
     {
-        foreach (var direction in CardinalDirectionConstants.LeftOrdering[currentEdge.GetDirectionOfRectangle(leadingPoint)])
+        foreach (
+            var direction in CardinalDirectionConstants.LeftOrdering[
+                currentEdge.GetDirectionOfRectangle(leadingPoint)
+            ]
+        )
         {
-            foreach (var edge in paths.Where(path => direction == CardinalDirectionConstants.InvertDirection[path.GetDirectionOfRectangle(leadingPoint)]).OrderBy(x => x.Area))
+            foreach (
+                var edge in paths
+                    .Where(path =>
+                        direction
+                        == CardinalDirectionConstants.InvertDirection[
+                            path.GetDirectionOfRectangle(leadingPoint)
+                        ]
+                    )
+                    .OrderBy(x => x.Area)
+            )
             {
                 yield return edge;
             }
@@ -181,8 +223,10 @@ public class Day09RedCarpet
     {
         foreach (var chain in chains)
         {
-            if (chain.coordinates.Contains(rectangle.Corner1.Key)
-                || chain.coordinates.Contains(rectangle.Corner2.Key))
+            if (
+                chain.coordinates.Contains(rectangle.Corner1.Key)
+                || chain.coordinates.Contains(rectangle.Corner2.Key)
+            )
             {
                 chain.Rectangles.Add(rectangle);
                 chain.coordinates.Add(rectangle.Corner1.Key);
@@ -197,7 +241,10 @@ public class Day09RedCarpet
         chains.Add(newChain);
     }
 
-    private Rectangle2D FindBiggestFullRectangle(List<Rectangle2D> rectangles, Dictionary<CoordinateKey, CarpetCoordinate2D> coordinateMap)
+    private Rectangle2D FindBiggestFullRectangle(
+        List<Rectangle2D> rectangles,
+        Dictionary<CoordinateKey, CarpetCoordinate2D> coordinateMap
+    )
     {
         foreach (var rectangle in rectangles)
         {
@@ -211,31 +258,47 @@ public class Day09RedCarpet
 
     private List<Rectangle2D> GetRectangles(string input)
     {
-        var redCarpets = DataParser.SplitLines(input)
-         .Select(inputLine => new Coordinate2D(inputLine))
-         .ToList();
+        var redCarpets = DataParser
+            .SplitLines(input)
+            .Select(inputLine => new Coordinate2D(inputLine))
+            .ToList();
         List<Coordinate2D> unusedCarpets = [.. redCarpets];
         List<Rectangle2D> rectangles = [];
         foreach (var redCarpet in redCarpets)
         {
             unusedCarpets.Remove(redCarpet);
-            rectangles.AddRange(unusedCarpets.Select(unusedCarpets => new Rectangle2D(redCarpet, unusedCarpets)));
+            rectangles.AddRange(
+                unusedCarpets.Select(unusedCarpets => new Rectangle2D(redCarpet, unusedCarpets))
+            );
         }
         return rectangles;
     }
 
-    public void Paint(Dictionary<Coordinate2D.CoordinateKey, CarpetCoordinate2D> coordinateMap, bool paint)
+    public void Paint(
+        Dictionary<Coordinate2D.CoordinateKey, CarpetCoordinate2D> coordinateMap,
+        bool paint
+    )
     {
         if (!paint)
             return;
-        for (long y = coordinateMap.Values.Min(y => y.Y); y <= coordinateMap.Values.Max(y => y.Y); y++)
+        for (
+            long y = coordinateMap.Values.Min(y => y.Y);
+            y <= coordinateMap.Values.Max(y => y.Y);
+            y++
+        )
         {
             string line = "";
-            for (long x = coordinateMap.Values.Min(x => x.X); x <= coordinateMap.Values.Max(x => x.X); x++)
+            for (
+                long x = coordinateMap.Values.Min(x => x.X);
+                x <= coordinateMap.Values.Max(x => x.X);
+                x++
+            )
             {
-
                 var coordinateKey = new Coordinate2D.CoordinateKey(x, y);
-                if (!coordinateMap.TryGetValue(coordinateKey, out var coordinate) || coordinate.IsNone)
+                if (
+                    !coordinateMap.TryGetValue(coordinateKey, out var coordinate)
+                    || coordinate.IsNone
+                )
                 {
                     line += ".";
                     continue;
@@ -291,27 +354,17 @@ public class Day09RedCarpet
 
         public bool Is2DLine
         {
-            get
-            {
-                return Corner1.X == Corner2.X
-                    || Corner1.Y == Corner2.Y;
-            }
+            get { return Corner1.X == Corner2.X || Corner1.Y == Corner2.Y; }
         }
 
         public bool IsHorizontal
         {
-            get
-            {
-                return Corner1.Y == Corner2.Y;
-            }
+            get { return Corner1.Y == Corner2.Y; }
         }
 
         public bool IsVertical
         {
-            get
-            {
-                return Corner1.X == Corner2.X;
-            }
+            get { return Corner1.X == Corner2.X; }
         }
 
         public Rectangle2D(Coordinate2D corner1, Coordinate2D corner2)
@@ -330,7 +383,9 @@ public class Day09RedCarpet
             throw new Exception("Corner not part of rectangle");
         }
 
-        public void PaintCoordinates(Dictionary<Coordinate2D.CoordinateKey, CarpetCoordinate2D> coordinateMap)
+        public void PaintCoordinates(
+            Dictionary<Coordinate2D.CoordinateKey, CarpetCoordinate2D> coordinateMap
+        )
         {
             foreach (var coordinateKey in GetPartialBorder())
             {
@@ -347,7 +402,6 @@ public class Day09RedCarpet
                         coordinate.IsGreen = true;
                     }
             }
-
         }
 
         public bool IsValidRectangle(Dictionary<CoordinateKey, CarpetCoordinate2D> coordinateMap)
@@ -373,41 +427,78 @@ public class Day09RedCarpet
             switch (point1Direction)
             {
                 case CornerDirection.UpLeft:
-                    return IsValidInDirection(coordinateMap, Corner2.X, Corner1.Y, CardinalDirection.Right)
-                        && IsValidInDirection(coordinateMap, Corner1.X, Corner2.Y, CardinalDirection.Down)
-                        && IsValidInDirection(coordinateMap, Corner1.X, Corner2.Y, CardinalDirection.Left)
-                        && IsValidInDirection(coordinateMap, Corner2.X, Corner1.Y, CardinalDirection.Up);
+                    return IsValidInDirection(
+                            coordinateMap,
+                            Corner2.X,
+                            Corner1.Y,
+                            CardinalDirection.Right
+                        )
+                        && IsValidInDirection(
+                            coordinateMap,
+                            Corner1.X,
+                            Corner2.Y,
+                            CardinalDirection.Down
+                        )
+                        && IsValidInDirection(
+                            coordinateMap,
+                            Corner1.X,
+                            Corner2.Y,
+                            CardinalDirection.Left
+                        )
+                        && IsValidInDirection(
+                            coordinateMap,
+                            Corner2.X,
+                            Corner1.Y,
+                            CardinalDirection.Up
+                        );
                 case CornerDirection.UpRight:
-                    return IsValidInDirection(coordinateMap, Corner1.X, Corner2.Y, CardinalDirection.Right)
-                        && IsValidInDirection(coordinateMap, Corner1.X, Corner2.Y, CardinalDirection.Down)
-                        && IsValidInDirection(coordinateMap, Corner2.X, Corner1.Y, CardinalDirection.Left)
-                        && IsValidInDirection(coordinateMap, Corner2.X, Corner1.Y, CardinalDirection.Up);
+                    return IsValidInDirection(
+                            coordinateMap,
+                            Corner1.X,
+                            Corner2.Y,
+                            CardinalDirection.Right
+                        )
+                        && IsValidInDirection(
+                            coordinateMap,
+                            Corner1.X,
+                            Corner2.Y,
+                            CardinalDirection.Down
+                        )
+                        && IsValidInDirection(
+                            coordinateMap,
+                            Corner2.X,
+                            Corner1.Y,
+                            CardinalDirection.Left
+                        )
+                        && IsValidInDirection(
+                            coordinateMap,
+                            Corner2.X,
+                            Corner1.Y,
+                            CardinalDirection.Up
+                        );
                 default:
                     throw new Exception("I messed up");
             }
         }
 
-        private bool IsValidInDirection(Dictionary<CoordinateKey, CarpetCoordinate2D> coordinateMap, long x, long y, CardinalDirection cardinalDirection)
+        private bool IsValidInDirection(
+            Dictionary<CoordinateKey, CarpetCoordinate2D> coordinateMap,
+            long x,
+            long y,
+            CardinalDirection cardinalDirection
+        )
         {
             switch (cardinalDirection)
             {
                 case CardinalDirection.Up:
-                    return coordinateMap.Keys.Any(coord =>
-                        coord.X == x && coord.Y <= y
-                    );
+                    return coordinateMap.Keys.Any(coord => coord.X == x && coord.Y <= y);
                 case CardinalDirection.Down:
-                    return coordinateMap.Keys.Any(coord =>
-                        coord.X == x && coord.Y >= y
-                    );
+                    return coordinateMap.Keys.Any(coord => coord.X == x && coord.Y >= y);
                 case CardinalDirection.Left:
-                    return coordinateMap.Keys.Any(coord =>
-                        coord.X <= x && coord.Y == y
-                    );
+                    return coordinateMap.Keys.Any(coord => coord.X <= x && coord.Y == y);
 
                 case CardinalDirection.Right:
-                    return coordinateMap.Keys.Any(coord =>
-                        coord.X >= x && coord.Y == y
-                    );
+                    return coordinateMap.Keys.Any(coord => coord.X >= x && coord.Y == y);
                 default:
                     throw new Exception($"I messed up - {cardinalDirection}");
             }
@@ -420,8 +511,7 @@ public class Day09RedCarpet
                     return CornerDirection.UpLeft;
                 else
                     return CornerDirection.DownLeft;
-            else
-                if (Corner1.Y < Corner2.Y)
+            else if (Corner1.Y < Corner2.Y)
                 return CornerDirection.UpRight;
             else
                 return CornerDirection.DownRight;
@@ -430,9 +520,17 @@ public class Day09RedCarpet
         private IEnumerable<Coordinate2D.CoordinateKey> GetPartialBorder()
         {
             if (Is2DLine)
-                for (long x = Math.Min(Corner1.X, Corner2.X); x <= Math.Max(Corner1.X, Corner2.X); x++)
+                for (
+                    long x = Math.Min(Corner1.X, Corner2.X);
+                    x <= Math.Max(Corner1.X, Corner2.X);
+                    x++
+                )
                 {
-                    for (long y = Math.Min(Corner1.Y, Corner2.Y); y <= Math.Max(Corner1.Y, Corner2.Y); y++)
+                    for (
+                        long y = Math.Min(Corner1.Y, Corner2.Y);
+                        y <= Math.Max(Corner1.Y, Corner2.Y);
+                        y++
+                    )
                     {
                         yield return new Coordinate2D.CoordinateKey(x, y);
                     }
@@ -443,14 +541,12 @@ public class Day09RedCarpet
 
         public bool ContainsMainCorner(CoordinateKey key)
         {
-            return Corner1.Key == key
-                || Corner2.Key == key;
+            return Corner1.Key == key || Corner2.Key == key;
         }
 
         public bool IsLineAndContainsPoint(Coordinate2D point)
         {
-            return IsHorizontal && point.Y == Corner1.Y
-                || IsVertical && point.X == Corner1.X;
+            return IsHorizontal && point.Y == Corner1.Y || IsVertical && point.X == Corner1.X;
         }
     }
 
@@ -458,19 +554,22 @@ public class Day09RedCarpet
     {
         public bool IsRed = false;
         public bool IsGreen = false;
-        public bool IsNone { get { return !IsRed && !IsGreen; } }
-        public CarpetCoordinate2D(long x, long y) : base(x, y)
+        public bool IsNone
         {
+            get { return !IsRed && !IsGreen; }
         }
+
+        public CarpetCoordinate2D(long x, long y)
+            : base(x, y) { }
     }
 
     public class RectangleChain
     {
         public HashSet<Coordinate2D.CoordinateKey> coordinates = [];
         public List<Rectangle2D> Rectangles = [];
-        public RectangleChain()
-        {
-        }
+
+        public RectangleChain() { }
+
         public RectangleChain(List<Rectangle2D> newChainSet)
         {
             Rectangles = newChainSet;
@@ -485,6 +584,4 @@ public class Day09RedCarpet
             return string.Join('|', Rectangles);
         }
     }
-
-
 }

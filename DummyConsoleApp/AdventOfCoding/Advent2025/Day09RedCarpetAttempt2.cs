@@ -1,15 +1,16 @@
-﻿using DummyConsoleApp.AdventOfCoding.Data;
+﻿using System.Diagnostics;
+using DummyConsoleApp.AdventOfCoding.Data;
 using DummyConsoleApp.AdventOfCoding.Utilities;
 using DummyConsoleApp.AdventOfCoding.Utilities.DataStructures;
 using DummyConsoleApp.AdventOfCoding.Utilities.Extensions;
 using SkiaSharp;
-using System.Diagnostics;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025;
 
 public class Day09RedCarpetAttempt2
 {
-    const string sampleData = @"7,1
+    const string sampleData =
+        @"7,1
 11,1
 11,7
 9,7
@@ -17,7 +18,8 @@ public class Day09RedCarpetAttempt2
 2,5
 2,3
 7,3";
-    const string mySample = @"0,50
+    const string mySample =
+        @"0,50
 5,50
 5,55
 10,55
@@ -60,6 +62,7 @@ public class Day09RedCarpetAttempt2
 100,50
 65,50
 75,50";
+
     public void Main()
     {
         long largestFullRectangle;
@@ -68,16 +71,26 @@ public class Day09RedCarpetAttempt2
         strokeWidth = 1;
 
         //largestFullRectangle = GetLargestRectangle(mySample, runLabel: "Sample");
-         // Console.WriteLine($"sample rectangle size {largestFullRectangle}");
+        // Console.WriteLine($"sample rectangle size {largestFullRectangle}");
         strokeWidth = 10;
         //if (largestFullRectangle != 24 && false)
         //    throw new Exception("Largest rect was {largestFullRectangle}");
         scale = .1;
-        bestRectangle = new Rectangle2D(new Coordinate2D("94523,48719"), new Coordinate2D("4733,32241"));
-        largestFullRectangle = GetLargestRectangle(AdventData2025.Day9RedCarpets, false, runLabel: "big");
+        bestRectangle = new Rectangle2D(
+            new Coordinate2D("94523,48719"),
+            new Coordinate2D("4733,32241")
+        );
+        largestFullRectangle = GetLargestRectangle(
+            AdventData2025.Day9RedCarpets,
+            false,
+            runLabel: "big"
+        );
         stoppy.Stop();
-        Console.WriteLine($"The largest full rectangle area is: {largestFullRectangle}. Solved in {stoppy.ElapsedMilliseconds} ms");
+        Console.WriteLine(
+            $"The largest full rectangle area is: {largestFullRectangle}. Solved in {stoppy.ElapsedMilliseconds} ms"
+        );
     }
+
     Rectangle2D? bestRectangle = null;
 
     List<Coordinate2D> redCarpets = [];
@@ -90,18 +103,24 @@ public class Day09RedCarpetAttempt2
     bool log = false;
     int strokeWidth = 0;
     double scale = 10;
+
     public long GetLargestRectangle(string input, bool log = true, string runLabel = "")
     {
         this.runLabel = runLabel;
         this.log = log;
         InitData(input);
         Console.WriteLine($"init data complete, processing lines into shapes");
-        var rectangle = new Rectangle2D(new Coordinate2D("5991,68827"), new Coordinate2D("94523,50049"));
-        OutputShape("Straight lines",
+        var rectangle = new Rectangle2D(
+            new Coordinate2D("5991,68827"),
+            new Coordinate2D("94523,50049")
+        );
+        OutputShape(
+            "Straight lines",
             horizontalLines.Values,
             verticalLines.Values,
             redCarpets,
-            redRectangle: rectangle);
+            redRectangle: rectangle
+        );
 
         ProcessLinesIntoShapes();
         OutputShapes();
@@ -138,7 +157,9 @@ public class Day09RedCarpetAttempt2
         foreach (var redCarpet in redCarpets)
         {
             unusedCarpets.Remove(redCarpet);
-            rectangles.AddRange(unusedCarpets.Select(unusedCarpet => new Rectangle2D(redCarpet, unusedCarpet)));
+            rectangles.AddRange(
+                unusedCarpets.Select(unusedCarpet => new Rectangle2D(redCarpet, unusedCarpet))
+            );
         }
         return rectangles;
     }
@@ -194,7 +215,7 @@ public class Day09RedCarpetAttempt2
                 }
             }
 
-            // close completed shapes 
+            // close completed shapes
             foreach (var shape in openShapes.ToList())
             {
                 if (shape.ActiveLine != null)
@@ -217,9 +238,10 @@ public class Day09RedCarpetAttempt2
         redCarpetByY = [];
         verticalLines = [];
         horizontalLines = [];
-        redCarpets = DataParser.SplitLines(input)
-             .Select(inputLine => new Coordinate2D(inputLine))
-             .ToList();
+        redCarpets = DataParser
+            .SplitLines(input)
+            .Select(inputLine => new Coordinate2D(inputLine))
+            .ToList();
 
         foreach (var carpet in redCarpets)
         {
@@ -237,8 +259,6 @@ public class Day09RedCarpetAttempt2
         }
     }
 
-
-
     #region private classes
 
     private class Rectangle2D
@@ -248,6 +268,7 @@ public class Day09RedCarpetAttempt2
         public long x2;
         public long y2;
         public long area;
+
         public Rectangle2D(Coordinate2D corner1, Coordinate2D corner2)
         {
             x1 = Math.Min(corner1.X, corner2.X);
@@ -258,6 +279,7 @@ public class Day09RedCarpetAttempt2
         }
 
         public IEnumerable<long> GetXCoords() => [x1, x2];
+
         public IEnumerable<long> GetYCoords() => [y1, y2];
 
         public override string ToString()
@@ -276,6 +298,7 @@ public class Day09RedCarpetAttempt2
         public bool hasFlatLine = false;
 
         public Shape() { }
+
         public Shape(Shape shape, LineVertical newLine)
         {
             verticalLines = shape.verticalLines.ToList();
@@ -334,8 +357,11 @@ public class Day09RedCarpetAttempt2
             if (activePoints.Count > 3 && !hasFlatLine)
             {
                 activePoints.Sort();
-                var line1 =
-                ActiveLine = new LineVertical(ActiveLine.X, activePoints[0], activePoints[1]);
+                var line1 = ActiveLine = new LineVertical(
+                    ActiveLine.X,
+                    activePoints[0],
+                    activePoints[1]
+                );
                 var newLine = new LineVertical(ActiveLine.X, activePoints[2], activePoints[3]);
                 openShapes.Add(new Shape(this, newLine));
             }
@@ -348,7 +374,6 @@ public class Day09RedCarpetAttempt2
         internal void RegisterFirstLine(LineVertical verticalLine)
         {
             ActiveLine = new LineVertical(verticalLine);
-
         }
 
         internal void TryRegisterPoint(long y)
@@ -374,12 +399,14 @@ public class Day09RedCarpetAttempt2
         public long X { get; set; }
         public long YStart { get; set; }
         public long YEnd { get; set; }
+
         public LineVertical(long x, long yStart, long yEnd)
         {
             X = x;
             YStart = yStart;
             YEnd = yEnd;
         }
+
         public LineVertical(ICollection<Coordinate2D> coordinates)
         {
             X = coordinates.First().X;
@@ -435,12 +462,14 @@ public class Day09RedCarpetAttempt2
         public long Y { get; set; }
         public long XStart { get; set; }
         public long XEnd { get; set; }
+
         public LineHorizontal(ICollection<Coordinate2D> coordinates)
         {
             Y = coordinates.First().Y;
             XStart = coordinates.Min(c => c.X);
             XEnd = coordinates.Max(c => c.X);
         }
+
         public override string ToString()
         {
             return $"{Y}|{XStart}->{XEnd}";
@@ -458,7 +487,9 @@ public class Day09RedCarpetAttempt2
     private void DrawRectangleInShape(Shape shape, Rectangle2D rect)
     {
         Console.WriteLine($"Valid rectangle was found: {rect}");
-        Console.WriteLine($"In shape: {shape.verticalLines.First()} - {shape.verticalLines.Last()}");
+        Console.WriteLine(
+            $"In shape: {shape.verticalLines.First()} - {shape.verticalLines.Last()}"
+        );
         OutputShape("RectangleInShape", [], shape.verticalLines, [], rect, logFull: true);
     }
 
@@ -479,17 +510,19 @@ public class Day09RedCarpetAttempt2
                 [],
                 shape.verticalLines,
                 redCarpets,
-                redRectangle: bestRectangle);
+                redRectangle: bestRectangle
+            );
         }
     }
 
     private void OutputShape(
-          string label,
-          IEnumerable<LineHorizontal> horizontalLines,
-          IEnumerable<LineVertical> verticalLines,
-          IEnumerable<Coordinate2D> points,
-          Rectangle2D? redRectangle = null,
-          bool logFull = false)
+        string label,
+        IEnumerable<LineHorizontal> horizontalLines,
+        IEnumerable<LineVertical> verticalLines,
+        IEnumerable<Coordinate2D> points,
+        Rectangle2D? redRectangle = null,
+        bool logFull = false
+    )
     {
         if (!log)
             return;
@@ -510,7 +543,7 @@ public class Day09RedCarpetAttempt2
             Color = SKColors.Green,
             StrokeWidth = strokeWidth,
             IsAntialias = false,
-            Style = SKPaintStyle.Stroke
+            Style = SKPaintStyle.Stroke,
         };
 
         Console.WriteLine("Drawing Horizontal Lines");
@@ -538,18 +571,21 @@ public class Day09RedCarpetAttempt2
                 Color = SKColors.Red,
                 StrokeWidth = redLineWidth,
                 IsAntialias = false,
-                Style = SKPaintStyle.Stroke
+                Style = SKPaintStyle.Stroke,
             };
             foreach (var xCoord in redRectangle.GetXCoords())
                 canvas.DrawLine(xCoord, redRectangle.y1, xCoord, redRectangle.y2, redPaintLine);
             foreach (var yCoord in redRectangle.GetYCoords())
                 canvas.DrawLine(redRectangle.x1, yCoord, redRectangle.x2, yCoord, redPaintLine);
-
         }
 
         // Save to PNG file
         Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tmp"));
-        var outputPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tmp", $"run_{DateTime.Now:dd-hh-mm-ss}_{runLabel}_{label}.png");
+        var outputPath = Path.Combine(
+            AppDomain.CurrentDomain.BaseDirectory,
+            "tmp",
+            $"run_{DateTime.Now:dd-hh-mm-ss}_{runLabel}_{label}.png"
+        );
 
         using var image = surface.Snapshot();
         using var data = image.Encode(SKEncodedImageFormat.Png, 100);

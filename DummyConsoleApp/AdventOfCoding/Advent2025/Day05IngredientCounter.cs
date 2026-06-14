@@ -11,6 +11,7 @@ namespace DummyConsoleApp.AdventOfCoding.Advent2025
             CountIngredients(AdventData2025.Day5Ranges, AdventData2025.Day5Ingredients);
             CountRanges(AdventData2025.Day5Ranges);
         }
+
         public int CountIngredients(string rangesInput, string ingredientsInput)
         {
             var ranges = DataParser.SplitLines(rangesInput);
@@ -21,7 +22,9 @@ namespace DummyConsoleApp.AdventOfCoding.Advent2025
                 var r = new Range(range);
                 rangesList.Add(r);
             }
-            var freshIngredients = ingredients.Where(ingredient => rangesList.Any(r => r.InRange(ingredient)));
+            var freshIngredients = ingredients.Where(ingredient =>
+                rangesList.Any(r => r.InRange(ingredient))
+            );
             var freshCount = freshIngredients.Count();
             Console.WriteLine($"Fresh Ingredients Count: {freshCount}");
             return freshCount;
@@ -63,10 +66,12 @@ namespace DummyConsoleApp.AdventOfCoding.Advent2025
             {
                 return $"{min}-{max}";
             }
+
             public bool deadRange = false;
             public long min;
             public long max;
             public long Count => max - min + 1;
+
             public bool InRange(long value)
             {
                 return value >= min && value <= max;

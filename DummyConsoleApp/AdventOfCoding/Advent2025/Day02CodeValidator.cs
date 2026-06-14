@@ -1,5 +1,5 @@
-﻿using DummyConsoleApp.AdventOfCoding.Data;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+using DummyConsoleApp.AdventOfCoding.Data;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2025
 {
@@ -12,8 +12,9 @@ namespace DummyConsoleApp.AdventOfCoding.Advent2025
             GetInvalidNumberSum(AdventData2025.Day2Codes, false);
         }
 
-        public IEnumerable<CodeRange> ParseRanges(string data) { 
-            foreach(var entry in data.Split(',', StringSplitOptions.RemoveEmptyEntries))
+        public IEnumerable<CodeRange> ParseRanges(string data)
+        {
+            foreach (var entry in data.Split(',', StringSplitOptions.RemoveEmptyEntries))
             {
                 var parts = entry.Split('-');
                 yield return new CodeRange(long.Parse(parts[0]), long.Parse(parts[1]));
@@ -25,11 +26,9 @@ namespace DummyConsoleApp.AdventOfCoding.Advent2025
             long sum = 0;
             foreach (var codeRange in ParseRanges(data))
             {
-                for(long code = codeRange.Min; code <= codeRange.Max; code++)
+                for (long code = codeRange.Min; code <= codeRange.Max; code++)
                 {
-                    if (simple 
-                        ? IsValidCodeSimple(code)
-                        : IsValidCode(code))
+                    if (simple ? IsValidCodeSimple(code) : IsValidCode(code))
                     {
                         sum += code;
                     }
@@ -41,9 +40,7 @@ namespace DummyConsoleApp.AdventOfCoding.Advent2025
 
         public IEnumerable<int> GetInvalidNumbers(CodeRange range)
         {
-
             yield return 0;
-
         }
 
         public static bool IsValidCodeSimple(long code)
@@ -57,16 +54,15 @@ namespace DummyConsoleApp.AdventOfCoding.Advent2025
             return code == potentialMatch;
         }
 
-
         public static bool IsValidCode(long code)
         {
             var codeString = code.ToString();
-            var digits = code.ToString().Take(codeString.Length/2).ToList();
+            var digits = code.ToString().Take(codeString.Length / 2).ToList();
             var pattern = "";
-            foreach(var digit in digits)
+            foreach (var digit in digits)
             {
                 pattern += digit;
-                if(Regex.IsMatch(codeString, $@"^({pattern})+$"))
+                if (Regex.IsMatch(codeString, $@"^({pattern})+$"))
                     return true;
             }
             return false;
@@ -76,10 +72,9 @@ namespace DummyConsoleApp.AdventOfCoding.Advent2025
         {
             public long Min { get; set; }
             public long Max { get; set; }
-            public CodeRange(string input)
-            {
 
-            }
+            public CodeRange(string input) { }
+
             public CodeRange(long min, long max)
             {
                 Min = min;

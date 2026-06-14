@@ -1,7 +1,7 @@
-﻿using DummyConsoleApp.AdventOfCoding.Data;
+﻿using System.Diagnostics;
+using DummyConsoleApp.AdventOfCoding.Data;
 using DummyConsoleApp.AdventOfCoding.Utilities;
 using DummyConsoleApp.AdventOfCoding.Utilities.DataStructures;
-using System.Diagnostics;
 
 namespace DummyConsoleApp.AdventOfCoding.Advent2015;
 
@@ -17,7 +17,9 @@ public class Day06Lights
         stoppy.Restart();
         var lightsAdvanced = CountLights(AdventData2015.Day6LightToggles, true);
         stoppy.Stop();
-        Console.WriteLine($"Total brightness of lights: {lightsAdvanced} . Took {stoppy.ElapsedMilliseconds} ms");
+        Console.WriteLine(
+            $"Total brightness of lights: {lightsAdvanced} . Took {stoppy.ElapsedMilliseconds} ms"
+        );
     }
 
     public DefaultDictionary<Coordinate2D.CoordinateKey, bool> lights = new();
@@ -25,7 +27,8 @@ public class Day06Lights
 
     public int CountLights(string input, bool advanced)
     {
-        var lightOperations = DataParser.SplitLines(input)
+        var lightOperations = DataParser
+            .SplitLines(input)
             .Select(line => new LightOperation(line))
             .ToList();
         lights = [];
@@ -37,12 +40,8 @@ public class Day06Lights
             else
                 lightOperation.PerformOperation(lights);
         }
-        return advanced
-            ? lights2.Values.Sum()
-            : lights.Count(light => light.Value);
+        return advanced ? lights2.Values.Sum() : lights.Count(light => light.Value);
     }
-
-
 
     public class LightOperation
     {
@@ -53,7 +52,8 @@ public class Day06Lights
             if (sections[0] == "turn")
             {
                 currentIndex++;
-                Operation = sections[currentIndex] == "on" ? OperationType.TurnOn : OperationType.TurnOff;
+                Operation =
+                    sections[currentIndex] == "on" ? OperationType.TurnOn : OperationType.TurnOff;
             }
             else if (sections[0] == "toggle")
             {
@@ -64,14 +64,16 @@ public class Day06Lights
             currentIndex += 2;
             To = new Coordinate2D(sections[currentIndex]);
         }
+
         public Coordinate2D From;
         public Coordinate2D To;
         public OperationType Operation;
+
         public enum OperationType
         {
             TurnOn,
             TurnOff,
-            Toggle
+            Toggle,
         }
 
         public override string ToString()
@@ -108,7 +110,7 @@ public class Day06Lights
                         lights[coordinate] += 1;
                         break;
                     case OperationType.TurnOff:
-                        if(lights[coordinate] > 0)
+                        if (lights[coordinate] > 0)
                             lights[coordinate] -= 1;
                         break;
                     case OperationType.Toggle:
@@ -131,7 +133,6 @@ public class Day06Lights
                     yield return new Coordinate2D.CoordinateKey(x, y);
                 }
             }
-
         }
     }
 }
